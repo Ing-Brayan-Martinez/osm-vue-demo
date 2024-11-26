@@ -11,7 +11,6 @@ import WebMap from "@arcgis/core/WebMap";
 import MapView from "@arcgis/core/views/MapView";
 import Zoom from "@arcgis/core/widgets/Zoom";
 import BasemapToggle from "@arcgis/core/widgets/BasemapToggle";
-import Search from "@arcgis/core/webdoc/applicationProperties/Search";
 
 
 export default {
@@ -30,29 +29,21 @@ export default {
       map: webmap,
     });
 
+    // Create a zoom widget
+    let zoom = new Zoom({
+      view: view,
+      visible: true,
+    });
+    view.ui.add(zoom, "top-right");
+
     // Create a basemap toggle widget
     let basemapToggle = new BasemapToggle({
       view: view,
       nextBasemap: "hybrid",
       visible: true
     });
-    view.ui.add(basemapToggle, "top-left");
+    view.ui.add(basemapToggle, "bottom-right");
 
-    // Create a zoom widget
-    let zoom = new Zoom({
-      view: view,
-      visible: true,
-    });
-    view.ui.add(zoom, "top-left");
-
-    // Create a search widget
-    const searchWidget = new Search({
-      view: view
-    });
-    view.ui.add(searchWidget, {
-      position: "top-left",
-      index: 2
-    });
   }
 }
 </script>

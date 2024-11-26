@@ -16,10 +16,10 @@
   padding: 10px;
 
   position: absolute;
-  top: 10px;
-  /*left: 10px;*/
-  left: 77.6%;
+  top: 5px;
+  left: 5px;
+  /*left: 77.6%;*/
   z-index: 1;
-  visibility: hidden;
+  /*visibility: hidden;*/
 }
 </style>
