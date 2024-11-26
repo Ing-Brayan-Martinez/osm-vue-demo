@@ -1,21 +1,21 @@
 <template>
   <div class="mapdiv">
-    <demo/>
+    <search-form/>
   </div>
 </template>
 
 <script>
-import Demo from "@/components/Demo.vue";
 
 import WebMap from "@arcgis/core/WebMap";
 import MapView from "@arcgis/core/views/MapView";
 import Zoom from "@arcgis/core/widgets/Zoom";
 import BasemapToggle from "@arcgis/core/widgets/BasemapToggle";
+import SearchForm from "@/components/search/SearchForm.vue";
 
 
 export default {
   name: 'App',
-  components: {Demo},
+  components: {SearchForm},
   async mounted() {
     const webmap = new WebMap({
       portalItem: {
