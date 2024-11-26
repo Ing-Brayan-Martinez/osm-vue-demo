@@ -1,15 +1,22 @@
 <template>
-  <div class="mapdiv"></div>
+  <div class="mapdiv">
+    <demo/>
+  </div>
 </template>
 
 <script>
+import Demo from "@/components/Demo.vue";
+
 import WebMap from "@arcgis/core/WebMap";
 import MapView from "@arcgis/core/views/MapView";
-import Bookmarks from "@arcgis/core/widgets/Bookmarks";
-import Expand from "@arcgis/core/widgets/Expand"; 
+import Zoom from "@arcgis/core/widgets/Zoom";
+import BasemapToggle from "@arcgis/core/widgets/BasemapToggle";
+import Search from "@arcgis/core/webdoc/applicationProperties/Search";
+
 
 export default {
   name: 'App',
+  components: {Demo},
   async mounted() {
     const webmap = new WebMap({
       portalItem: {
@@ -23,26 +30,28 @@ export default {
       map: webmap,
     });
 
-    const bookmarks = new Bookmarks({
+    // Create a basemap toggle widget
+    let basemapToggle = new BasemapToggle({
+      view: view,
+      nextBasemap: "hybrid",
+      visible: true
+    });
+    view.ui.add(basemapToggle, "top-left");
+
+    // Create a zoom widget
+    let zoom = new Zoom({
+      view: view,
+      visible: true,
+    });
+    view.ui.add(zoom, "top-left");
+
+    // Create a search widget
+    const searchWidget = new Search({
       view: view
     });
-
-    const bkExpand = new Expand({
-      view: view,
-      content: bookmarks,
-      expanded: true,
-    });
-
-    // Add the widget to the top-right corner of the view
-    view.ui.add(bkExpand, "top-right");
-
-    // bonus - how many bookmarks in the webmap?
-    view.when(function () {
-      if (webmap.bookmarks && webmap.bookmarks.length) {
-        console.log("Bookmarks: ", webmap.bookmarks.length);
-      } else {
-        console.log("No bookmarks in this webmap.");
-      }
+    view.ui.add(searchWidget, {
+      position: "top-left",
+      index: 2
     });
   }
 }
@@ -50,4 +59,11 @@ export default {
 
 <style scoped>
   @import './main.css';
+
+  .mapdiv {
+    position: relative;
+
+    height: 98vh;
+    width: 100%;
+  }
 </style>
