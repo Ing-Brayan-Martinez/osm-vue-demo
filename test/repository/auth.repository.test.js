@@ -1,4 +1,3 @@
-import {describe, expect, it} from "@jest/globals";
 import {login} from "@/repository/auth.repository.js";
 
 describe('Identity', () => {

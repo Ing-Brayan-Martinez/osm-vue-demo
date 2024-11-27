@@ -1,4 +1,3 @@
-import {describe, expect, it} from "@jest/globals";
 import {location} from "@/repository/location.repository.js";
 
 describe('Location', () => {
