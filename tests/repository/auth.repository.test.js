@@ -1,6 +1,6 @@
 import {login} from "@/repository/auth.repository.js";
 
-describe('Identity', () => {
+describe('Auth', () => {
 
   it('login', async () => {
     const result =

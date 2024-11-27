@@ -5,12 +5,11 @@ export const login = async (data) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Basic " + btoa(data.data.user + ":" + data.data.password + ":" + data.data.group),
     },
-    body: "",
+    body: JSON.stringify(data),
   };
 
-  return await fetch(BASE_URL + "/identity/rb-token-auth/", options)
+  return await fetch(`${BASE_URL}/api/Auth/pinpassword/login`, options)
     .then((res) => {
       return res.json()
     })

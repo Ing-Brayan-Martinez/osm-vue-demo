@@ -1,4 +1,4 @@
-import {BASE_URL, DEBUG} from "@/config/config.js";
+import {API_KEY, BASE_URL, DEBUG} from "@/config/config.js";
 
 //buscar la ubicaciones segun el nombre
 export const retrieveLocationByName = async (data) => {
@@ -6,6 +6,7 @@ export const retrieveLocationByName = async (data) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "Authorization": "Basic " + API_KEY,
     },
     body: JSON.stringify(data),
   };
@@ -30,6 +31,7 @@ export const retrieveTripSearchDoor2Door = async (data) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "Authorization": "Basic " + API_KEY,
     },
     body: JSON.stringify(data),
   };
@@ -54,6 +56,7 @@ export const retrieveGisRoute = async (data) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "Authorization": "Basic " + API_KEY,
     },
     body: JSON.stringify(data),
   };
@@ -78,6 +81,7 @@ export const retrieveJourneyDetail = async (data) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "Authorization": "Basic " + API_KEY,
     },
     body: JSON.stringify(data),
   };

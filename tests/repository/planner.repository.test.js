@@ -9,10 +9,10 @@ describe('RoutePlanner', () => {
 
   it('retrieveLocationByName', async () => {
     const param = {
-      "input": "La Parrilla Moderna", // Nombre de la ubicación
-      "withProducts": "1", // Devuelve los lugares con productos
-      "type": "S", // Tipo de parada
-      "maxNo": "" // Número máximo de paradas (desde el 1 al 1000)
+      "input": "La Parrilla Moderna",
+      "withProducts": "1",
+      "type": "S",
+      "maxNo": ""
     };
 
     const result =
