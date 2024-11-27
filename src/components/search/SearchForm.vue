@@ -5,6 +5,8 @@ import {storeToRefs} from "pinia";
 const store = useCounterStore();
 const {increment, reset} = store;
 const { count, doubleCount, isVisibleResult} = storeToRefs(store)
+
+const url = import.meta.env.VITE_API_URL;
 </script>
 
 <template>
@@ -22,6 +24,7 @@ const { count, doubleCount, isVisibleResult} = storeToRefs(store)
       <h1>Results</h1>
       <p>{{ count }}</p>
       <p>{{ doubleCount }}</p>
+      <p>La URL de la API es: {{ url }}</p>
     </div>
 
   </div>

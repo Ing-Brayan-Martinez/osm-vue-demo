@@ -1,3 +1,5 @@
+import {BASE_URL} from "@/config/config.js";
+
 export const login = async (data) => {
   const options = {
     method: "POST",
@@ -8,7 +10,7 @@ export const login = async (data) => {
     body: "",
   };
 
-  return await fetch(data.url + "/identity/rb-token-auth/", options)
+  return await fetch(BASE_URL + "/identity/rb-token-auth/", options)
     .then((res) => {
       return res.json()
     })

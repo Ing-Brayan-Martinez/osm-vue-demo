@@ -6,10 +6,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-
     "delete-linux": "rm -R dist",
     "delete-windows": "rmdir /s /q dist",
-
     "test": "jest",
     "lint": "eslint ./src --fix"
   },
@@ -19,10 +17,10 @@
     "vue": "^3.5.12"
   },
   "devDependencies": {
-    "@jest/globals": "^29.4.0",
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@eslint/js": "^9.14.0",
+    "@jest/globals": "^29.4.0",
     "@vitejs/plugin-vue": "^5.1.4",
     "babel-jest": "^29.7.0",
     "eslint": "^9.14.0",
