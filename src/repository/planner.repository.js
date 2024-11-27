@@ -1,4 +1,4 @@
-import {BASE_URL} from "@/config/config.js";
+import {BASE_URL, DEBUG} from "@/config/config.js";
 
 //buscar la ubicaciones segun el nombre
 export const retrieveLocationByName = async (data) => {
@@ -7,10 +7,15 @@ export const retrieveLocationByName = async (data) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: data,
+    body: JSON.stringify(data),
   };
 
-  return await fetch(BASE_URL + "/api/RoutePlanner/RetrieveLocationByName", options)
+  if (DEBUG) {
+    console.log(`${BASE_URL}/api/RoutePlanner/RetrieveLocationByName`);
+    console.log(options);
+  }
+
+  return await fetch(`${BASE_URL}/api/RoutePlanner/RetrieveLocationByName`, options)
     .then((res) => {
       return res.json()
     })
@@ -26,10 +31,15 @@ export const retrieveTripSearchDoor2Door = async (data) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: data,
+    body: JSON.stringify(data),
   };
 
-  return await fetch(BASE_URL + "/api/RoutePlanner/RetrieveTripSearchDoor2Door", options)
+  if (DEBUG) {
+    console.log(`${BASE_URL}/api/RoutePlanner/RetrieveTripSearchDoor2Door`);
+    console.log(options);
+  }
+
+  return await fetch(`${BASE_URL}/api/RoutePlanner/RetrieveTripSearchDoor2Door`, options)
     .then((res) => {
       return res.json()
     })
@@ -45,10 +55,15 @@ export const retrieveGisRoute = async (data) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: data,
+    body: JSON.stringify(data),
   };
 
-  return await fetch(BASE_URL + "/api/RoutePlanner/RetrieveGisRoute", options)
+  if (DEBUG) {
+    console.log(`${BASE_URL}/api/RoutePlanner/RetrieveGisRoute`);
+    console.log(options);
+  }
+
+  return await fetch(`${BASE_URL}/api/RoutePlanner/RetrieveGisRoute`, options)
     .then((res) => {
       return res.json()
     })
@@ -64,10 +79,15 @@ export const retrieveJourneyDetail = async (data) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: data,
+    body: JSON.stringify(data),
   };
 
-  return await fetch(BASE_URL + "/api/RoutePlanner/RetrieveJourneyDetail", options)
+  if (DEBUG) {
+    console.log(`${BASE_URL}/api/RoutePlanner/RetrieveJourneyDetail`);
+    console.log(options);
+  }
+
+  return await fetch(`${BASE_URL}/api/RoutePlanner/RetrieveJourneyDetail`, options)
     .then((res) => {
       return res.json()
     })
