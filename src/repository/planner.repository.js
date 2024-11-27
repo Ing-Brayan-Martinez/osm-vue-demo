@@ -7,7 +7,7 @@ export const retrieveLocationByName = async (data) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: "",
+    body: data,
   };
 
   return await fetch(BASE_URL + "/api/RoutePlanner/RetrieveLocationByName", options)
@@ -26,7 +26,7 @@ export const retrieveTripSearchDoor2Door = async (data) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: "",
+    body: data,
   };
 
   return await fetch(BASE_URL + "/api/RoutePlanner/RetrieveTripSearchDoor2Door", options)
@@ -45,7 +45,7 @@ export const retrieveGisRoute = async (data) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: "",
+    body: data,
   };
 
   return await fetch(BASE_URL + "/api/RoutePlanner/RetrieveGisRoute", options)
@@ -64,7 +64,7 @@ export const retrieveJourneyDetail = async (data) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: "",
+    body: data,
   };
 
   return await fetch(BASE_URL + "/api/RoutePlanner/RetrieveJourneyDetail", options)
