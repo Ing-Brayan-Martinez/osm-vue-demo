@@ -1,11 +1,11 @@
 import {describe, expect, it} from "@jest/globals";
-import {login} from "@/repository/auth.repository.js";
+import {location} from "@/repository/location.repository.js";
 
 describe('Location', () => {
 
-  it('login', async () => {
+  it('location', async () => {
     const result =
-      await login({username: 'test', password: 'test', group: 'test'});
+      await location({username: 'test', password: 'test', group: 'test'});
 
     expect(result).not.toBeNull();
   });
