@@ -1,27 +1,10 @@
 <script setup>
- import {ref} from "vue";
+import {useCounterStore} from "@/stores/counter.js";
+import {storeToRefs} from "pinia";
 
- //propiedades de la vista
- const counter = ref(0);
- const isVisibleResult = ref(false);
-
- const increment = () => {
-  console.log('increment');
-  counter.value++;
-  if (counter.value <= 0) {
-    isVisibleResult.value = false;
-  } else {
-    if (isVisibleResult.value !== true) {
-      isVisibleResult.value = true;
-    }
-  }
- }
-
- const reset = () => {
-  counter.value = 0;
-  isVisibleResult.value = false;
- }
-
+const store = useCounterStore();
+const {increment, reset} = store;
+const { count, doubleCount, isVisibleResult} = storeToRefs(store)
 </script>
 
 <template>
@@ -37,7 +20,8 @@
 
     <div id="search-results" v-if="isVisibleResult">
       <h1>Results</h1>
-      <p>{{ counter }}</p>
+      <p>{{ count }}</p>
+      <p>{{ doubleCount }}</p>
     </div>
 
   </div>
