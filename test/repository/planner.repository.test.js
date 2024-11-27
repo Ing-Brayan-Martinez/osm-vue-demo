@@ -1,29 +1,44 @@
 import {describe, expect, it} from "@jest/globals";
 import {
+  retrieveGisRoute,
+  retrieveJourneyDetail,
   retrieveLocationByName,
-  retrieveLocationByName2,
-  retrieveLocationByName3
+  retrieveTripSearchDoor2Door
 } from "@/repository/planner.repository.js";
 
 describe('RoutePlanner', () => {
 
   it('retrieveLocationByName', async () => {
+    const param = {
+      "input": "La Parrilla Moderna", // Nombre de la ubicación
+      "withProducts": "1", // Devuelve los lugares con productos
+      "type": "S", // Tipo de parada
+      "maxNo": "" // Número máximo de paradas (desde el 1 al 1000)
+    };
+
     const result =
-      await retrieveLocationByName({username: 'test', password: 'test', group: 'test'});
+      await retrieveLocationByName(param);
 
     expect(result).not.toBeNull();
   });
 
-  it('retrieveLocationByName2', async () => {
+  it('retrieveTripSearchDoor2Door', async () => {
     const result =
-      await retrieveLocationByName2({username: 'test', password: 'test', group: 'test'});
+      await retrieveTripSearchDoor2Door({username: 'test', password: 'test', group: 'test'});
 
     expect(result).not.toBeNull();
   });
 
-  it('retrieveLocationByName3', async () => {
+  it('retrieveGisRoute', async () => {
     const result =
-      await retrieveLocationByName3({username: 'test', password: 'test', group: 'test'});
+      await retrieveGisRoute({username: 'test', password: 'test', group: 'test'});
+
+    expect(result).not.toBeNull();
+  });
+
+  it('retrieveJourneyDetail', async () => {
+    const result =
+      await retrieveJourneyDetail({username: 'test', password: 'test', group: 'test'});
 
     expect(result).not.toBeNull();
   });
