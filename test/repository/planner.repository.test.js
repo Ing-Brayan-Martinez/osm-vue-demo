@@ -1,11 +1,29 @@
 import {describe, expect, it} from "@jest/globals";
-import {login} from "@/repository/auth.repository.js";
+import {
+  retrieveLocationByName,
+  retrieveLocationByName2,
+  retrieveLocationByName3
+} from "@/repository/planner.repository.js";
 
-describe('Planner', () => {
+describe('RoutePlanner', () => {
 
-  it('login', async () => {
+  it('retrieveLocationByName', async () => {
     const result =
-      await login({username: 'test', password: 'test', group: 'test'});
+      await retrieveLocationByName({username: 'test', password: 'test', group: 'test'});
+
+    expect(result).not.toBeNull();
+  });
+
+  it('retrieveLocationByName2', async () => {
+    const result =
+      await retrieveLocationByName2({username: 'test', password: 'test', group: 'test'});
+
+    expect(result).not.toBeNull();
+  });
+
+  it('retrieveLocationByName3', async () => {
+    const result =
+      await retrieveLocationByName3({username: 'test', password: 'test', group: 'test'});
 
     expect(result).not.toBeNull();
   });
