@@ -1,0 +1,11 @@
+{
+  "testEnvironment": "node",
+  "rootDir": "./test",
+  "coveragePathIgnorePatterns": [
+    "/node_modules/"
+  ],
+  "transform": {
+    "^.+\\.jsx?$": "babel-jest"
+  },
+  "moduleFileExtensions": ["js", "jsx", "mjs"]
+}
