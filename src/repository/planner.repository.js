@@ -1,6 +1,11 @@
 import {API_KEY, BASE_URL, DEBUG} from "@/config/config.js";
 
-//buscar la ubicaciones segun el nombre
+/**
+ * Buscar la ubicaciones segun el nombre.
+ *
+ * @param data {object}
+ * @returns {Promise<any>}
+ */
 export const retrieveLocationByName = async (data) => {
   const options = {
     method: "POST",
@@ -25,7 +30,12 @@ export const retrieveLocationByName = async (data) => {
     });
 };
 
-// buscar el viaje segun los parametros
+/**
+ * Buscar el viaje segun los parametros.
+ *
+ * @param data
+ * @returns {Promise<any>}
+ */
 export const retrieveTripSearchDoor2Door = async (data) => {
   const options = {
     method: "POST",
@@ -50,7 +60,12 @@ export const retrieveTripSearchDoor2Door = async (data) => {
     });
 };
 
-// buscar el viaje a pie
+/**
+ * Buscar el viaje a pie.
+ *
+ * @param data
+ * @returns {Promise<any>}
+ */
 export const retrieveGisRoute = async (data) => {
   const options = {
     method: "POST",
@@ -75,7 +90,12 @@ export const retrieveGisRoute = async (data) => {
     });
 };
 
-// Extraer la ruta completa del bus para saber donde abordar
+/**
+ * Extraer la ruta completa del bus para saber donde abordar.
+ *
+ * @param data
+ * @returns {Promise<any>}
+ */
 export const retrieveJourneyDetail = async (data) => {
   const options = {
     method: "POST",
