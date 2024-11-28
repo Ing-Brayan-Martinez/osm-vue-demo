@@ -17,7 +17,9 @@ import Loading from "@/components/icons/Loading.vue";
   </div>
 </template>
 
-<style scoped>
+<style>
+@import '../main.css';
+
 #splash-container {
   width: 100%;
   height: 97vh;
@@ -28,7 +30,7 @@ import Loading from "@/components/icons/Loading.vue";
   width: 470px;
   height: 370px;
   padding: 20px;
-  background-color:  rgb(104, 214, 57);;
+  background-color: var(--maas-green);
 
   position: absolute;
   top: 50%;
@@ -52,7 +54,7 @@ import Loading from "@/components/icons/Loading.vue";
   font-weight: 700;
   font-style: normal;
   font-size: 30px;
-  color: white;
+  color: var(--maas-white);
 }
 
 #splash-container > div[id="splash-logo-container"] > p {
@@ -60,7 +62,7 @@ import Loading from "@/components/icons/Loading.vue";
   font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
-  color: white;
+  color: var(--maas-white);
 
   margin-bottom: 20px;
 }

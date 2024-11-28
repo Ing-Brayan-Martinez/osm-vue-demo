@@ -1,7 +1,16 @@
 @import 'https://js.arcgis.com/4.31/@arcgis/core/assets/esri/themes/light/main.css';
+
+:root {
+  --maas-green: rgb(104, 214, 57);
+  --maas-white: white;
+  --maas-black: black;
+}
+
+
 html,
 body,
 #app {
   width: 100%;
   height: 100%;
 }
+
