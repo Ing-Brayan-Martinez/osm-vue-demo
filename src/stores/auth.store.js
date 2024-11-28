@@ -9,14 +9,18 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async onLogin(data) {
       try {
-        const result = await login(data);
+        const result = await login(data) ?? [];
         const any = R.map((list) => list, result);
-        this.userData = any;
+        console.log(any);
+
       } catch (error) {
         //showTooltip(error)
         //let the form component display the error
         return error
       }
     },
+    async onLogout() {
+
+    },
   }
-});
+})

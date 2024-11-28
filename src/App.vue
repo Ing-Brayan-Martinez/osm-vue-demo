@@ -1,60 +1,42 @@
 <template>
-  <div class="mapdiv">
-    <search-form/>
+  <div v-if="route === 'splash'">
+    <SplashView />
+  </div>
+  <div v-else-if="route === 'login'">
+    <LoginView />
+  </div>
+  <div v-else-if="route === 'main'">
+    <MainView />
+  </div>
+  <div v-else-if="route === 'loading'">
+    <LoadingView />
+  </div>
+  <div v-else>
+    Not A/B/C
   </div>
 </template>
 
 <script>
-
-import WebMap from "@arcgis/core/WebMap";
-import MapView from "@arcgis/core/views/MapView";
-import Zoom from "@arcgis/core/widgets/Zoom";
-import BasemapToggle from "@arcgis/core/widgets/BasemapToggle";
-import SearchForm from "@/components/search/SearchForm.vue";
-
+import MainView from "@/views/MainView.vue";
+import {useGlobalStore} from "@/stores/global.store.js";
+import SplashView from "@/views/SplashView.vue";
+import LoginView from "@/views/LoginView.vue";
+import LoadingView from "@/views/LoadingView.vue";
 
 export default {
   name: 'App',
-  components: {SearchForm},
+  components: {LoadingView, LoginView, SplashView, MainView},
+  data() {
+    return {
+      route: useGlobalStore().route
+    }
+  },
   async mounted() {
-    const webmap = new WebMap({
-      portalItem: {
-        id: "aa1d3f80270146208328cf66d022e09c",
-      },
-    });
-
-    const view = new MapView({
-      // https://v3.vuejs.org/api/instance-properties.html#el
-      container: this.$el,
-      map: webmap,
-    });
-
-    // Create a zoom widget
-    let zoom = new Zoom({
-      view: view,
-      visible: true,
-    });
-    view.ui.add(zoom, "top-right");
-
-    // Create a basemap toggle widget
-    let basemapToggle = new BasemapToggle({
-      view: view,
-      nextBasemap: "hybrid",
-      visible: true
-    });
-    view.ui.add(basemapToggle, "bottom-right");
-
-  }
+    await useGlobalStore().onStart();
+  },
 }
 </script>
 
 <style scoped>
   @import './main.css';
-
-  .mapdiv {
-    position: relative;
-
-    height: 98vh;
-    width: 100%;
-  }
 </style>
