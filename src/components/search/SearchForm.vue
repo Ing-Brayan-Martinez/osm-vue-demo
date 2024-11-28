@@ -11,22 +11,35 @@ const url = import.meta.env.VITE_API_URL;
 
 <template>
   <div id="search-form-container">
-
     <div id="search-form">
       <h1>Search rute</h1>
-      <input type="text" name="start-route" placeholder="Start Rute">
-      <input type="text" name="end-route" placeholder="End Rute">
-      <button @click="increment">Search</button>
-      <button @click="reset">Reset</button>
+      <input
+        name="start-route"
+        placeholder="Start Rute"
+        type="text"
+      >
+      <input
+        name="end-route"
+        placeholder="End Rute"
+        type="text"
+      >
+      <button @click="increment">
+        Search
+      </button>
+      <button @click="reset">
+        Reset
+      </button>
     </div>
 
-    <div id="search-results" v-if="isVisibleResult">
+    <div
+      v-if="isVisibleResult"
+      id="search-results"
+    >
       <h1>Results</h1>
       <p>{{ count }}</p>
       <p>{{ doubleCount }}</p>
       <p>La URL de la API es: {{ url }}</p>
     </div>
-
   </div>
 </template>
 
