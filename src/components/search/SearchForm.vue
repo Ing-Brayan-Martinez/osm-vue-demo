@@ -1,6 +1,9 @@
 <script setup>
 import {storeToRefs} from "pinia";
 import {usePlannerStore} from "@/stores/planner.store.js";
+import {useNavigatorStore} from "@/stores/navigator.store.js";
+
+const navigator = useNavigatorStore();
 
 const store = usePlannerStore();
 const {increment, reset} = store;

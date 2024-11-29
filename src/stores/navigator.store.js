@@ -1,8 +1,8 @@
 import {defineStore} from "pinia";
 
-export const useGlobalStore = defineStore('global', {
+export const useNavigatorStore = defineStore('navigator', {
   state: () => ({
-    route: '/main',
+    route: '/splash',
   }),
   actions: {
      navigateTo(route) {

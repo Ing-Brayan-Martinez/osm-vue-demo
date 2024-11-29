@@ -6,7 +6,7 @@
     <AuthView/>
   </div>
   <div v-else-if="route === '/main'">
-    <MainView />
+    <PlannerView/>
   </div>
   <div v-else>
     Not A/B/C
@@ -16,12 +16,12 @@
 <script setup>
 import SplashView from "@/views/SplashView.vue";
 import AuthView from "@/views/AuthView.vue";
-import MainView from "@/views/MainView.vue";
+import PlannerView from "@/views/PlannerView.vue";
 
-import {useGlobalStore} from "@/stores/global.store.js";
+import {useNavigatorStore} from "@/stores/navigator.store.js";
 import {storeToRefs} from "pinia";
 
-const store = useGlobalStore();
+const store = useNavigatorStore();
 const {route} = storeToRefs(store);
 </script>
 

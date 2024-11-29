@@ -1,8 +1,8 @@
 <script setup>
-import {useGlobalStore} from "@/stores/global.store.js";
 import {useAuthStore} from "@/stores/auth.store.js";
+import {useNavigatorStore} from "@/stores/navigator.store.js";
 
-const globalStore = useGlobalStore();
+const navigator = useNavigatorStore();
 const authStore = useAuthStore();
 </script>
 

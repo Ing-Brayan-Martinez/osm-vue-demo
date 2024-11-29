@@ -1,18 +1,23 @@
 <script setup>
-import IconMaasLogo from "@/components/icons/IconMaasLogo.vue";
-import Loading from "@/components/icons/Loading.vue";
-import {useGlobalStore} from "@/stores/global.store.js";
+import IconMaasLogo from "@/components/splash/icons/IconMaasLogo.vue";
+import Loading from "@/components/splash/icons/Loading.vue";
 import {onMounted} from "vue";
 import {useSplashStore} from "@/stores/splash.store.js";
+import {useNavigatorStore} from "@/stores/navigator.store.js";
+import {SplashStatus} from "@/config/enums.js";
 
 onMounted(async () => {
-  console.log(`the splash component is now mounted.`)
-  const isSplash = await useSplashStore().onStart();
+  const navigator = useNavigatorStore();
+  const result = await useSplashStore().onStart();
 
-  if (isSplash) {
-    useGlobalStore().navigateTo('/login')
+  if (result === SplashStatus.SUCCESS) {
+    navigator.navigateTo("/main");
+  } else if (result === SplashStatus.SUCCESS_NOT_LOCATION) {
+    navigator.navigateTo("/main");
+  } else if (result === SplashStatus.FAILURE) {
+    navigator.navigateTo("/splash");
   }
-})
+});
 </script>
 
 <template>
