@@ -1,7 +1,15 @@
-<script setup>
-
+<script>
 import IconMaasLogo from "@/components/icons/IconMaasLogo.vue";
 import Loading from "@/components/icons/Loading.vue";
+import {useGlobalStore} from "@/stores/global.store.js";
+
+export default {
+  name: "SplashView",
+  components: {IconMaasLogo, Loading},
+  async mounted() {
+    await useGlobalStore().onStart();
+  },
+};
 </script>
 
 <template>
