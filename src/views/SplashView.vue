@@ -1,15 +1,18 @@
-<script>
+<script setup>
 import IconMaasLogo from "@/components/icons/IconMaasLogo.vue";
 import Loading from "@/components/icons/Loading.vue";
 import {useGlobalStore} from "@/stores/global.store.js";
+import {onMounted} from "vue";
+import {useSplashStore} from "@/stores/splash.store.js";
 
-export default {
-  name: "SplashView",
-  components: {IconMaasLogo, Loading},
-  async mounted() {
-    await useGlobalStore().onStart();
-  },
-};
+onMounted(async () => {
+  console.log(`the splash component is now mounted.`)
+  const isSplash = await useSplashStore().onStart();
+
+  if (isSplash) {
+    useGlobalStore().navigateTo('/login')
+  }
+})
 </script>
 
 <template>

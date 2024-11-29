@@ -47,7 +47,9 @@ export default {
   </div>
 </template>
 
-<style scoped>
+<style>
+@import '../main.css';
+
 .mapdiv {
   position: relative;
 
