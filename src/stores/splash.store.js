@@ -5,12 +5,10 @@ import {SplashStatus} from "@/config/enums.js";
 
 export const useSplashStore = defineStore('splash', {
   state: () => ({
-    position: null
+    //
   }),
   getters: {
-    isPosition: (state) => {
-      return state.position !== null;
-    }
+    //
   },
   actions: {
     async onStart() {
@@ -28,7 +26,8 @@ export const useSplashStore = defineStore('splash', {
                 console.log(position);
                 console.log('La ubicación es: ', position.coords.latitude, 'y esta: ', position.coords.longitude);
 
-                this.position = position;
+                //se debe guardar en el cola storage
+                //this.position = position;
 
                 // se usa para mostrar la pantalla de splash
                 sleep(500).then(() => resolve(SplashStatus.SUCCESS));
