@@ -3,9 +3,11 @@ import {login} from "@/repository/auth.repository.js";
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    userData: null,
-    // ...
+    authData: null,
   }),
+  getters: {
+    isLoggedIn: (state) => state.authData !== null,
+  },
   actions: {
     async onLogin(data) {
       try {

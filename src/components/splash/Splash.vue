@@ -11,9 +11,9 @@ onMounted(async () => {
   const result = await useSplashStore().onStart();
 
   if (result === SplashStatus.SUCCESS) {
-    navigator.navigateTo("/main");
+    navigator.navigateTo("/login");
   } else if (result === SplashStatus.SUCCESS_NOT_LOCATION) {
-    navigator.navigateTo("/main");
+    navigator.navigateTo("/login");
   } else if (result === SplashStatus.FAILURE) {
     navigator.navigateTo("/splash");
   }
