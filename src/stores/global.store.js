@@ -2,7 +2,7 @@ import {defineStore} from "pinia";
 
 export const useGlobalStore = defineStore('global', {
   state: () => ({
-    route: '/splash',
+    route: '/main',
   }),
   actions: {
      navigateTo(route) {

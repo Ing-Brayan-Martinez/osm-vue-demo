@@ -9,9 +9,29 @@ import {
 export const usePlannerStore = defineStore('planner', {
   state: () => ({
     userData: null,
-    // ...
+    count: 0,
+    isVisibleResult: false,
   }),
+  getters: {
+    doubleCount(state) {
+      return state.count * 2;
+    }
+  },
   actions: {
+    increment() {
+      this.count++;
+      if (this.count <= 0) {
+        this.isVisibleResult = false;
+      } else {
+        if (this.isVisibleResult !== true) {
+          this.isVisibleResult = true;
+        }
+      }
+    },
+    reset() {
+      this.count = 0;
+      this.isVisibleResult = false;
+    },
     /**
      *
      * @param data
@@ -76,8 +96,5 @@ export const usePlannerStore = defineStore('planner', {
         return error
       }
     },
-  },
-  getters: {
-    //
   }
 })

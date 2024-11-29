@@ -3,7 +3,7 @@
     <SplashView />
   </div>
   <div v-else-if="route === '/login'">
-    <LoginView />
+    <AuthView/>
   </div>
   <div v-else-if="route === '/main'">
     <MainView />
@@ -14,10 +14,11 @@
 </template>
 
 <script setup>
-import MainView from "@/views/MainView.vue";
-import {useGlobalStore} from "@/stores/global.store.js";
 import SplashView from "@/views/SplashView.vue";
-import LoginView from "@/views/LoginView.vue";
+import AuthView from "@/views/AuthView.vue";
+import MainView from "@/views/MainView.vue";
+
+import {useGlobalStore} from "@/stores/global.store.js";
 import {storeToRefs} from "pinia";
 
 const store = useGlobalStore();

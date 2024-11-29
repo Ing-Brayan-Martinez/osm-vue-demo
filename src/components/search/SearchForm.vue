@@ -1,8 +1,8 @@
 <script setup>
-import {useCounterStore} from "@/stores/counter.store.js";
 import {storeToRefs} from "pinia";
+import {usePlannerStore} from "@/stores/planner.store.js";
 
-const store = useCounterStore();
+const store = usePlannerStore();
 const {increment, reset} = store;
 const { count, doubleCount, isVisibleResult} = storeToRefs(store)
 
