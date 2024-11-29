@@ -18,7 +18,7 @@ export const useSplashStore = defineStore('splash', {
 
         // se usa para detener la ejecucion del hilo para que no se ejecute la proxima linea
         // y que se pueda mostar la pantalla de splash correctamente
-        sleep(1000)
+        sleep(500)
           .then(() => {
 
             // se usa para verificar si la geolocalizacion esta disponible
@@ -31,7 +31,7 @@ export const useSplashStore = defineStore('splash', {
                 this.position = position;
 
                 // se usa para mostrar la pantalla de splash
-                sleep(1000).then(() => resolve(SplashStatus.SUCCESS));
+                sleep(500).then(() => resolve(SplashStatus.SUCCESS));
               };
 
               const error = (err) => {
