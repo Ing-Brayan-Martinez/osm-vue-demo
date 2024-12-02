@@ -2,12 +2,37 @@
 import {useAuthStore} from "@/stores/auth.store.js";
 import {useNavigatorStore} from "@/stores/navigator.store.js";
 import IconMaasLogo from "@/components/splash/icons/IconMaasLogo.vue";
+import {ref} from "vue";
+import LoginToast from "@/components/login/LoginToast.vue";
+
+const showToastV = ref(false);
+const toastMessage = ref("");
+
+
+const showToast = () => {
+  toastMessage.value = '¡Acción realizada con éxito!';
+  showToastV.value = true;
+}
+
+
+
+
 
 const navigator = useNavigatorStore();
 const authStore = useAuthStore();
 
+const email = ref("");
+const password = ref("");
+
 const onSubmit = () => {
-  alert("Login");
+  if (email === null) {
+    navigator.showToast("Please enter your email");
+    return;
+  }
+  if (password === null) {
+    navigator.showToast("Please enter your password");
+    return;
+  }
 }
 </script>
 
@@ -21,22 +46,28 @@ const onSubmit = () => {
 
     <div id="login-formulario">
       <h1>Login</h1>
-      <form>
-        <input
-          name="username"
-          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-          placeholder="Username"
-          required type="email"
-        >
-        <input
-          name="password"
-          placeholder="Password"
-          required
-          type="password"
-        >
-        <button type="submit" @click="onSubmit">Submit</button>
-      </form>
+      <input
+        v-model="email"
+        name="email"
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+        placeholder="Email"
+        required
+        type="email"
+      >
+      <input
+        v-model="password"
+        name="password"
+        placeholder="Password"
+        required
+        type="password"
+      >
+      <button @click="onSubmit">Submit</button>
+      <p>{{ email }}</p>
+      <p>{{ password }}</p>
     </div>
+
+    <button @click="showToast">Mostrar Toast</button>
+    <LoginToast v-if="showToast" :message="toastMessage"/>
   </div>
 </template>
 
@@ -99,7 +130,7 @@ const onSubmit = () => {
   margin-bottom: 0px;
 }
 
-#login-form-container > div[id="login-formulario"] > form > input[type="email"] {
+#login-form-container > div[id="login-formulario"] > input[type="email"] {
   width: 97%;
   height: 30px;
   margin-top: 40px;
@@ -107,14 +138,14 @@ const onSubmit = () => {
   border-radius: 5px;
 }
 
-#login-form-container > div[id="login-formulario"] > form > input[type="password"] {
+#login-form-container > div[id="login-formulario"] > input[type="password"] {
   width: 97%;
   height: 30px;
   margin-bottom: 20px;
   border-radius: 5px;
 }
 
-#login-form-container > div[id="login-formulario"] > form > button {
+#login-form-container > div[id="login-formulario"] > button {
   width: 90px;
   padding: 5px;
   border-radius: 10px;
