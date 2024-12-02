@@ -21,17 +21,21 @@ const onSubmit = () => {
 
     <div id="login-formulario">
       <h1>Login</h1>
-      <input
-        name="username"
-        placeholder="Username"
-        type="text"
-      >
-      <input
-        name="password"
-        placeholder="Password"
-        type="password"
-      >
-      <button @click="onSubmit">Submit</button>
+      <form>
+        <input
+          name="username"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+          placeholder="Username"
+          required type="email"
+        >
+        <input
+          name="password"
+          placeholder="Password"
+          required
+          type="password"
+        >
+        <button type="submit" @click="onSubmit">Submit</button>
+      </form>
     </div>
   </div>
 </template>
@@ -95,7 +99,7 @@ const onSubmit = () => {
   margin-bottom: 0px;
 }
 
-#login-form-container > div[id="login-formulario"] > input[type="text"] {
+#login-form-container > div[id="login-formulario"] > form > input[type="email"] {
   width: 97%;
   height: 30px;
   margin-top: 40px;
@@ -103,14 +107,14 @@ const onSubmit = () => {
   border-radius: 5px;
 }
 
-#login-form-container > div[id="login-formulario"] > input[type="password"] {
+#login-form-container > div[id="login-formulario"] > form > input[type="password"] {
   width: 97%;
   height: 30px;
   margin-bottom: 20px;
   border-radius: 5px;
 }
 
-#login-form-container > div[id="login-formulario"] > button {
+#login-form-container > div[id="login-formulario"] > form > button {
   width: 90px;
   padding: 5px;
   border-radius: 10px;
