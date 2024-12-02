@@ -5,41 +5,87 @@ import IconMaasLogo from "@/components/splash/icons/IconMaasLogo.vue";
 import {ref} from "vue";
 import LoginToast from "@/components/login/LoginToast.vue";
 
-const showToastV = ref(false);
-const toastMessage = ref("");
-
-
-const showToast = () => {
-  toastMessage.value = '¡Acción realizada con éxito!';
-  showToastV.value = true;
-}
-
-
-
-
 
 const navigator = useNavigatorStore();
 const authStore = useAuthStore();
+
+//============================
+//  Toast
+//============================
+
+const isVisibleToast = ref(false);
+const message = ref("");
+const color = ref("");
+
+const showToast = (msg) => {
+  //Mostrar mensaje de toast
+  isVisibleToast.value = true;
+  message.value = msg;
+  color.value = "var(--maas-green)";
+
+  //Esperar para cerrar el toast automáticamente
+  setTimeout(() => {
+    isVisibleToast.value = false;
+  }, 3000);
+}
+
+//============================
+//  Login
+//============================
 
 const email = ref("");
 const password = ref("");
 
 const onSubmit = () => {
-  if (email === null) {
-    navigator.showToast("Please enter your email");
+  const regex = "[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$";
+
+  if (email.value === null) {
+    showToast("Please enter your email");
+    return;
+  } else if (email.value === undefined) {
+    showToast("Please enter your email");
+    return;
+  } else if (email.value === "") {
+    showToast("Please enter your email");
+    return;
+  } else if (String(password.value).trim().match(regex) === null) {
+    showToast("Please enter a valid email");
     return;
   }
-  if (password === null) {
-    navigator.showToast("Please enter your password");
+
+
+  if (password.value === null) {
+    showToast("Please enter your password");
+    return;
+  } else if (password.value === undefined) {
+    showToast("Please enter your password");
+    return;
+  } else if (password.value === "") {
+    showToast("Please enter your password");
     return;
   }
+
+  const data = {
+    email: email.value,
+    password: password.value
+  }
+
+  authStore.onLogin(data)
+    .then((result) => {
+      if (result) {
+        showToast("Login successful");
+        navigator.navigateTo("/main");
+      }
+    })
+    .catch((error) => {
+      showToast(error);
+    });
+
 }
 </script>
 
 <template>
-
   <div id="login-form-container">
-
     <div id="login-logo">
       <IconMaasLogo/>
     </div>
@@ -49,7 +95,6 @@ const onSubmit = () => {
       <input
         v-model="email"
         name="email"
-        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
         placeholder="Email"
         required
         type="email"
@@ -61,13 +106,18 @@ const onSubmit = () => {
         required
         type="password"
       >
-      <button @click="onSubmit">Submit</button>
+      <button @click="onSubmit">
+        Submit
+      </button>
       <p>{{ email }}</p>
       <p>{{ password }}</p>
     </div>
 
-    <button @click="showToast">Mostrar Toast</button>
-    <LoginToast v-if="showToast" :message="toastMessage"/>
+    <LoginToast
+      v-if="isVisibleToast"
+      :color="color"
+      :message="message"
+    />
   </div>
 </template>
 
