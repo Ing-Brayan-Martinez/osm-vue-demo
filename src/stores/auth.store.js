@@ -1,5 +1,11 @@
 import {defineStore} from "pinia";
 import {login} from "@/repository/auth.repository.js";
+import {
+  createConfigDefault,
+  getConfig,
+  isEmptyConfig,
+  updateConfig
+} from "@/repository/local.repository.js";
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -11,11 +17,22 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async onLogin(data) {
       try {
-        const result = await login(data) ?? [];
+        const result = await login(data);
 
+        const empty = isEmptyConfig();
 
-        const any = R.map((list) => list, result);
-        console.log(any);
+        if (empty) {
+          const data = createConfigDefault();
+          data.token = result.token;
+
+          updateConfig(data);
+
+        } else {
+          const data = getConfig();
+          data.token = result.token;
+
+          updateConfig(data);
+        }
 
       } catch (error) {
         return error
