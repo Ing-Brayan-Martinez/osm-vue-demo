@@ -1,4 +1,4 @@
-import {API_KEY, BASE_URL, DEBUG} from "@/config/config.js";
+import {BASE_URL, DEBUG} from "@/config/config.js";
 
 /**
  * Buscar la ubicaciones segun el nombre.
@@ -11,17 +11,18 @@ export const retrieveLocationByName = async (data) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Basic " + API_KEY,
+      "Firmware": "hola",
+      //"Authorization": "Basic " + API_KEY,
     },
     body: JSON.stringify(data),
   };
 
   if (DEBUG) {
-    console.log(`${BASE_URL}/api/RoutePlanner/RetrieveLocationByName`);
+    console.log(`${BASE_URL}/api/RoutePlannerLocation/RetrieveLocationByName`);
     console.log(options);
   }
 
-  return await fetch(`${BASE_URL}/api/RoutePlanner/RetrieveLocationByName`, options)
+  return await fetch(`${BASE_URL}/api/RoutePlannerLocation/RetrieveLocationByName`, options)
     .then((res) => {
       return res.json()
     })
@@ -41,17 +42,18 @@ export const retrieveTripSearchDoor2Door = async (data) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Basic " + API_KEY,
+      "Firmware": "hola",
+      //"Authorization": "Basic " + API_KEY,
     },
     body: JSON.stringify(data),
   };
 
   if (DEBUG) {
-    console.log(`${BASE_URL}/api/RoutePlanner/RetrieveTripSearchDoor2Door`);
+    console.log(`${BASE_URL}/api/RoutePlannerTripSearch/RetrieveTripSearchDoor2Door`);
     console.log(options);
   }
 
-  return await fetch(`${BASE_URL}/api/RoutePlanner/RetrieveTripSearchDoor2Door`, options)
+  return await fetch(`${BASE_URL}/api/RoutePlannerTripSearch/RetrieveTripSearchDoor2Door`, options)
     .then((res) => {
       return res.json()
     })
@@ -71,17 +73,18 @@ export const retrieveGisRoute = async (data) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Basic " + API_KEY,
+      "Firmware": "hola",
+      //"Authorization": "Basic " + API_KEY,
     },
     body: JSON.stringify(data),
   };
 
   if (DEBUG) {
-    console.log(`${BASE_URL}/api/RoutePlanner/RetrieveGisRoute`);
+    console.log(`${BASE_URL}/api/RoutePlannerGis/RetrieveGisRoute`);
     console.log(options);
   }
 
-  return await fetch(`${BASE_URL}/api/RoutePlanner/RetrieveGisRoute`, options)
+  return await fetch(`${BASE_URL}/api/RoutePlannerGis/RetrieveGisRoute`, options)
     .then((res) => {
       return res.json()
     })
@@ -101,17 +104,18 @@ export const retrieveJourneyDetail = async (data) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Basic " + API_KEY,
+      "Firmware": "hola",
+      //"Authorization": "Basic " + API_KEY,
     },
     body: JSON.stringify(data),
   };
 
   if (DEBUG) {
-    console.log(`${BASE_URL}/api/RoutePlanner/RetrieveJourneyDetail`);
+    console.log(`${BASE_URL}/api/RoutePlannerGis/RetrieveJourneyDetail`);
     console.log(options);
   }
 
-  return await fetch(`${BASE_URL}/api/RoutePlanner/RetrieveJourneyDetail`, options)
+  return await fetch(`${BASE_URL}/api/RoutePlannerGis/RetrieveJourneyDetail`, options)
     .then((res) => {
       return res.json()
     })
