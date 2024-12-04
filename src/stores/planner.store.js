@@ -5,10 +5,11 @@ import {
   retrieveLocationByName,
   retrieveTripSearchDoor2Door
 } from "@/repository/planner.repository.js";
+import {getConfig, isEmptyConfig} from "@/repository/local.repository.js";
+import Optional from "optional-js";
 
 export const usePlannerStore = defineStore('planner', {
   state: () => ({
-    userData: null,
     count: 0,
     isVisibleResult: false,
   }),
@@ -33,6 +34,23 @@ export const usePlannerStore = defineStore('planner', {
       this.isVisibleResult = false;
     },
     /**
+     * Metodo para obtener la localizacion actual del usuario desde el localStorage.
+     *
+     * @returns {Optional<Object | null>} - Devuelve un Optional con la localizacion actual del
+     * usuario, si no esta se devuelve un Optional vacio.
+     */
+    getLocationFromConfig() {
+      const empty = isEmptyConfig();
+      if (empty) {
+        return Optional.empty();
+      } else {
+        const data = getConfig();
+        const position = data.position.coords;
+
+        return Optional.ofNullable(position);
+      }
+    },
+    /**
      *
      * @param data
      * @returns {Promise<*>}
@@ -41,7 +59,7 @@ export const usePlannerStore = defineStore('planner', {
       try {
         const result = await retrieveLocationByName(data);
         const any = R.map((list) => list, result);
-        this.userData = any;
+
       } catch (error) {
         //showTooltip(error)
         //let the form component display the error
@@ -57,7 +75,7 @@ export const usePlannerStore = defineStore('planner', {
       try {
         const result = await retrieveTripSearchDoor2Door(data);
         const any = R.map((list) => list, result);
-        this.userData = any;
+
       } catch (error) {
         //showTooltip(error)
         //let the form component display the error
@@ -73,7 +91,7 @@ export const usePlannerStore = defineStore('planner', {
       try {
         const result = await retrieveGisRoute(data);
         const any = R.map((list) => list, result);
-        this.userData = any;
+
       } catch (error) {
         //showTooltip(error)
         //let the form component display the error
@@ -89,7 +107,7 @@ export const usePlannerStore = defineStore('planner', {
       try {
         const result = await retrieveJourneyDetail(data);
         const any = R.map((list) => list, result);
-        this.userData = any;
+
       } catch (error) {
         //showTooltip(error)
         //let the form component display the error

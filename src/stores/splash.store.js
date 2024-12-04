@@ -36,7 +36,7 @@ export const useSplashStore = defineStore('splash', {
                   console.log('La ubicación es: ', position.coords.latitude, 'y esta: ', position.coords.longitude);
                 }
 
-                //se debe guardar en el cola storage
+                //se debe guardar en el localstorage
                 const empty = isEmptyConfig();
 
                 if (empty) {

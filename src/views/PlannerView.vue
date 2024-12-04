@@ -7,10 +7,13 @@ import {onMounted, useTemplateRef} from "vue";
 import SearchForm from "@/components/search/SearchForm.vue";
 import {usePlannerStore} from "@/stores/planner.store.js";
 
-const store = usePlannerStore();
+
+// https://v3.vuejs.org/api/instance-properties.html#el
+// https://vuejs.org/guide/essentials/template-refs.html
 const container = useTemplateRef('my-input');
 
 onMounted(async () => {
+  const store = usePlannerStore();
 
   const webmap = new WebMap({
     portalItem: {
@@ -19,10 +22,25 @@ onMounted(async () => {
   });
 
   const view = new MapView({
-    // https://v3.vuejs.org/api/instance-properties.html#el
     container: container.value,
     map: webmap,
+    center: [-74.1, 4.65],
+    zoom: 14,
   });
+
+  // Se optiene la ubicacion actual del usuario que se obtubo con el API de
+  // geolocation del navegador
+  const positionOpt = store.getLocationFromConfig();
+
+  // Si la posicion es valida, se lo asigna al mapa
+  if (positionOpt.isPresent()) {
+    const coordinate = positionOpt.get();
+
+    const longitude = coordinate.longitude;
+    const latitude = coordinate.latitude;
+
+    view.center = [longitude, latitude];
+  }
 
   // Create a zoom widget
   let zoom = new Zoom({
