@@ -5,7 +5,9 @@ import Zoom from "@arcgis/core/widgets/Zoom";
 import BasemapToggle from "@arcgis/core/widgets/BasemapToggle";
 import {onMounted, useTemplateRef} from "vue";
 import SearchForm from "@/components/search/SearchForm.vue";
+import {usePlannerStore} from "@/stores/planner.store.js";
 
+const store = usePlannerStore();
 const container = useTemplateRef('my-input');
 
 onMounted(async () => {
