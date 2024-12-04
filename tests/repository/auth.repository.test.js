@@ -1,10 +1,11 @@
+import {describe, expect, it} from "vitest";
 import {login} from "@/repository/auth.repository.js";
 
-describe('Auth', () => {
+describe("Auth", () => {
 
-  it('login', async () => {
+  it("login", async () => {
     const result =
-      await login({username: 'test', password: 'test', group: 'test'});
+      await login({username: "test", password: "test", group: "test"});
 
     expect(result).not.toBeNull();
   });

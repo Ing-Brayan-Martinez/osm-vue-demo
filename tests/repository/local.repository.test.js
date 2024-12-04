@@ -1,3 +1,4 @@
+import {describe, expect, it} from "vitest";
 import {
   createConfigDefault,
   getConfig,
@@ -5,16 +6,16 @@ import {
   updateConfig
 } from "@/repository/local.repository.js";
 
-describe('Local', () => {
+describe("Local", () => {
 
-  it('createConfigDefault', async () => {
+  it("createConfigDefault", async () => {
     const result =
       await createConfigDefault();
 
     expect(result).not.toBeNull();
   });
 
-  it('isEmptyConfig', async () => {
+  it("isEmptyConfig", async () => {
     await createConfigDefault();
 
     const result = await isEmptyConfig();
@@ -22,7 +23,7 @@ describe('Local', () => {
     expect(result).toBeFalsy();
   });
 
-  it('getConfig', async () => {
+  it("getConfig", async () => {
     await createConfigDefault();
 
     const result = await getConfig();
@@ -30,12 +31,12 @@ describe('Local', () => {
     expect(result).not.toBeNull();
   });
 
-  it('updateConfig', async () => {
+  it("updateConfig", async () => {
     await createConfigDefault();
 
     const result = await getConfig();
 
-    result.token = '123';
+    result.token = "123";
 
     await updateConfig(result);
 
