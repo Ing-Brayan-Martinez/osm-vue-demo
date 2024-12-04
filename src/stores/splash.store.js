@@ -1,6 +1,13 @@
 import {defineStore} from "pinia";
 import {sleep} from "@/config/helpers.js";
 import {SplashStatus} from "@/config/enums.js";
+import {
+  createConfigDefault,
+  getConfig,
+  isEmptyConfig,
+  updateConfig
+} from "@/repository/local.repository.js";
+import {DEBUG} from "@/config/config.js";
 
 
 export const useSplashStore = defineStore('splash', {
@@ -16,21 +23,38 @@ export const useSplashStore = defineStore('splash', {
 
         // se usa para detener la ejecucion del hilo para que no se ejecute la proxima linea
         // y que se pueda mostar la pantalla de splash correctamente
-        sleep(500)
+        sleep(100)
           .then(() => {
 
             // se usa para verificar si la geolocalizacion esta disponible
             if ("geolocation" in navigator) {
 
               const success = (position) => {
-                console.log(position);
-                console.log('La ubicación es: ', position.coords.latitude, 'y esta: ', position.coords.longitude);
+
+                if (DEBUG) {
+                  console.log(position);
+                  console.log('La ubicación es: ', position.coords.latitude, 'y esta: ', position.coords.longitude);
+                }
 
                 //se debe guardar en el cola storage
-                //this.position = position;
+                const empty = isEmptyConfig();
+
+                if (empty) {
+                  const data = createConfigDefault();
+                  data.position = position;
+
+                  updateConfig(data);
+
+                } else {
+                  const data = getConfig();
+                  data.position = position;
+
+                  updateConfig(data);
+                }
 
                 // se usa para mostrar la pantalla de splash
-                sleep(500).then(() => resolve(SplashStatus.SUCCESS));
+                resolve(SplashStatus.SUCCESS);
+
               };
 
               const error = (err) => {

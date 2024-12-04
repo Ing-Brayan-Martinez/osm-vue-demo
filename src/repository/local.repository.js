@@ -6,14 +6,20 @@ export const createConfigDefault = () => {
     "position": null,
   }
   localStorage.setItem(TAG, JSON.stringify(data));
+  return getConfig();
 }
 
 export const updateConfig = (data) => {
   localStorage.setItem(TAG, JSON.stringify(data));
+  return getConfig();
 }
 
 export const getConfig = () => {
-  return JSON.parse(localStorage.getItem(TAG));
+  if (isEmptyConfig()) {
+    return createConfigDefault();
+  } else {
+    return JSON.parse(localStorage.getItem(TAG));
+  }
 }
 
 export const isEmptyConfig = () => {
