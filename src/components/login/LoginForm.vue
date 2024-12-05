@@ -3,7 +3,7 @@ import {useAuthStore} from "@/stores/auth.store.js";
 import {useNavigatorStore} from "@/stores/navigator.store.js";
 import IconMaasLogo from "@/components/splash/icons/IconMaasLogo.vue";
 import {ref} from "vue";
-import LoginToast from "@/components/login/LoginToast.vue";
+import LoginToast from "@/components/login/toast/LoginToast.vue";
 
 
 const navigator = useNavigatorStore();

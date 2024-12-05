@@ -1,37 +1,35 @@
 <script setup>
 import {storeToRefs} from "pinia";
 import {usePlannerStore} from "@/stores/planner.store.js";
-import {useNavigatorStore} from "@/stores/navigator.store.js";
-
-const navigator = useNavigatorStore();
+import {ref} from "vue";
+import StartRouterTextField from "@/components/search/textfield/StartRouterTextField.vue";
+import EndRouterTextFiled from "@/components/search/textfield/EndRouterTextFiled.vue";
 
 const store = usePlannerStore();
-const {increment, reset} = store;
+const {increment} = store;
 const { count, doubleCount, isVisibleResult} = storeToRefs(store)
 
 const url = import.meta.env.VITE_API_URL;
+
+const startRute = ref("x");
+const endRute = ref("x");
+
+
 </script>
 
 <template>
   <div id="search-form-container">
     <div id="search-form">
       <h1>Search rute</h1>
-      <input
-        name="start-route"
-        placeholder="Start Rute"
-        type="text"
-      >
-      <input
-        name="end-route"
-        placeholder="End Rute"
-        type="text"
-      >
-      <button @click="increment">
+
+      <StartRouterTextField/>
+
+      <EndRouterTextFiled/>
+
+      <v-btn @click="increment">
         Search
-      </button>
-      <button @click="reset">
-        Reset
-      </button>
+      </v-btn>
+
     </div>
 
     <div
@@ -42,6 +40,9 @@ const url = import.meta.env.VITE_API_URL;
       <p>{{ count }}</p>
       <p>{{ doubleCount }}</p>
       <p>La URL de la API es: {{ url }}</p>
+
+      <p>{{ startRute }}</p>
+      <p>{{ endRute }}</p>
     </div>
   </div>
 </template>
@@ -50,7 +51,7 @@ const url = import.meta.env.VITE_API_URL;
 /* Estilos para el contenedor padre */
 
 #search-form-container {
-  width: 300px;
+  width: 400px;
   height: auto;
   background-color: transparent;
 
@@ -73,7 +74,7 @@ const url = import.meta.env.VITE_API_URL;
 
 #search-form-container > div[id="search-form"]  > h1 {
   margin-top: 0px;
-  margin-bottom: 0px;
+  margin-bottom: 10px;
 }
 
 #search-form-container > div[id="search-form"] > input[type="text"] {

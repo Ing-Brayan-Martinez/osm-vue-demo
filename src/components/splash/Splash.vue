@@ -37,7 +37,7 @@ onMounted(async () => {
 
 div[id="splash-logo-container"] {
   width: 470px;
-  height: 370px;
+  height: 390px;
   padding: 20px;
   background-color: var(--maas-green);
 
