@@ -1,29 +1,88 @@
 <script setup>
-
 import {ref} from "vue";
+import {usePlannerStore} from "@/stores/planner.store.js";
+import {storeToRefs} from "pinia";
 
+// Store
+const store = usePlannerStore();
+
+// Para controlar el dialog
 const dialog = ref(false);
-const itemsEnd = ref(['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']);
+
+// para controlar el campo de busqueda
+const searchTerm = ref("");
+const loading = ref(false);
+const rules = {
+  required: v => !!v || 'Este campo es requerido'
+};
+
+// Para buscar los datos
+const onInput = () => {
+  loading.value = true
+  console.log(`Buscando: ${searchTerm.value}`)
+
+  const data = {
+    "input": `${searchTerm.value}`,
+    "withProducts": "1",
+    "type": "S",
+    "maxNo": ""
+  };
+
+  store.onRetrieveLocationByName(data)
+    .then(() => {
+      console.log(`Busqueda completada: ${searchTerm.value}`)
+      loading.value = false
+    });
+}
+
+const onSelect = () => {
+
+}
+
+// Para obtener los datos
+const {endRute, items} = storeToRefs(store);
 
 </script>
 
 <template>
 
-  <v-dialog v-model="dialog" max-width="290">
+  <v-dialog
+    v-model="dialog"
+    max-width="400"
+  >
     <v-card>
-      <v-card-title class="headline">Alerta</v-card-title>
+
+      <v-card-title class="headline">Search Route</v-card-title>
+
       <v-card-text>
-        Este es un mensaje de alerta.
+        <p>{{ searchTerm }}</p>
+        <v-text-field
+          v-model="searchTerm"
+          :loading="loading"
+          :rules="[rules.required]"
+          append-icon="mdi-magnify"
+          density="compact"
+          hide-details
+          single-line
+          @input="onInput"
+        />
       </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" text @click="dialog = false">OK</v-btn>
-      </v-card-actions>
+
+      <v-list>
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          :prepend-icon="item.icon"
+          :subtitle="item.subtitle"
+          :title="item.title"
+        ></v-list-item>
+      </v-list>
     </v-card>
+
   </v-dialog>
 
-  <v-autocomplete
-    :items="itemsEnd"
+  <v-text-field
+    v-model="endRute"
     label="End Rute"
     v-on:click="dialog = true"
   />

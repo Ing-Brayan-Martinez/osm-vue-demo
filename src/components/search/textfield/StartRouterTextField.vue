@@ -1,15 +1,19 @@
 <script setup>
 
 import {ref} from "vue";
+import {usePlannerStore} from "@/stores/planner.store.js";
+import {storeToRefs} from "pinia";
 
 const dialog = ref(false);
-const itemsStart = ref(['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']);
+
+const store = usePlannerStore();
+const {startRute} = storeToRefs(store);
 
 </script>
 
 <template>
 
-  <v-dialog v-model="dialog" max-width="290">
+  <v-dialog v-model="dialog" max-width="400">
     <v-card>
       <v-card-title class="headline">Alerta</v-card-title>
       <v-card-text>
@@ -22,8 +26,8 @@ const itemsStart = ref(['California', 'Colorado', 'Florida', 'Georgia', 'Texas',
     </v-card>
   </v-dialog>
 
-  <v-autocomplete
-    :items="itemsStart"
+  <v-text-field
+      v-model="startRute"
     label="Start Rute"
     v-on:click="dialog = true"
   />

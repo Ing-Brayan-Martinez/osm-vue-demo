@@ -1,19 +1,14 @@
 <script setup>
 import {storeToRefs} from "pinia";
 import {usePlannerStore} from "@/stores/planner.store.js";
-import {ref} from "vue";
 import StartRouterTextField from "@/components/search/textfield/StartRouterTextField.vue";
 import EndRouterTextFiled from "@/components/search/textfield/EndRouterTextFiled.vue";
 
 const store = usePlannerStore();
 const {increment} = store;
-const { count, doubleCount, isVisibleResult} = storeToRefs(store)
+const {count, doubleCount, isVisibleResult, startRute, endRute} = storeToRefs(store)
 
 const url = import.meta.env.VITE_API_URL;
-
-const startRute = ref("x");
-const endRute = ref("x");
-
 
 </script>
 

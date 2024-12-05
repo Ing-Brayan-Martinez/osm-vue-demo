@@ -12,6 +12,13 @@ export const usePlannerStore = defineStore('planner', {
   state: () => ({
     count: 0,
     isVisibleResult: false,
+    startRute: "x",
+    endRute: "x",
+    items: [
+      {title: "Plantilla 1", subtitle: "Descripción de la plantilla 1", icon: "mdi-file"},
+      {title: "Plantilla 2", subtitle: "Descripción de la plantilla 2", icon: "mdi-file"},
+      {title: "Plantilla 3", subtitle: "Descripción de la plantilla 3", icon: "mdi-file"},
+    ]
   }),
   getters: {
     doubleCount(state) {
@@ -28,10 +35,6 @@ export const usePlannerStore = defineStore('planner', {
           this.isVisibleResult = true;
         }
       }
-    },
-    reset() {
-      this.count = 0;
-      this.isVisibleResult = false;
     },
     /**
      * Metodo para obtener la localizacion actual del usuario desde el localStorage.
@@ -58,7 +61,7 @@ export const usePlannerStore = defineStore('planner', {
     async onRetrieveLocationByName(data) {
       try {
         const result = await retrieveLocationByName(data);
-        const any = R.map((list) => list, result);
+        //const any = R.map((list) => list, result);
 
       } catch (error) {
         //showTooltip(error)
