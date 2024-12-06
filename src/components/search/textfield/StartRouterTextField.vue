@@ -1,8 +1,6 @@
 <script setup>
-
 import {computed, ref} from "vue";
 import {usePlannerStore} from "@/stores/planner.store.js";
-import {storeToRefs} from "pinia";
 
 // Store
 const store = usePlannerStore();
@@ -13,42 +11,50 @@ const dialog = ref(false);
 // para controlar el campo de búsqueda
 const searchTerm = ref("");
 const loading = ref(false);
+const itemsSearchResult = ref([
+  {title: "Plantilla 1", subtitle: "Descripción de la plantilla 1", icon: "mdi-file"},
+  {title: "Plantilla 2", subtitle: "Descripción de la plantilla 2", icon: "mdi-file"},
+  {title: "Plantilla 3", subtitle: "Descripción de la plantilla 3", icon: "mdi-file"},
+]);
 const rules = {
   required: v => !!v || 'Este campo es requerido'
 };
 
 // Para buscar los datos
-const onInput = () => {
-  loading.value = true
-  console.log(`Buscando: ${searchTerm.value}`)
+const onInput = (event) => {
+  if (searchTerm.value.length > 3) {
+    loading.value = true
+    console.log(`Buscando: ${searchTerm.value}`)
+    console.log(`Event: ${event}`)
 
-  const data = {
-    "input": `${searchTerm.value}`,
-    "withProducts": "1",
-    "type": "S",
-    "maxNo": ""
-  };
+    const data = {
+      "input": `${searchTerm.value}`,
+      "withProducts": "1",
+      "type": "S",
+      "maxNo": ""
+    };
 
-  store.onRetrieveOriginLocationByName(data)
-    .then(() => {
-      console.log(`Busqueda completada: ${searchTerm.value}`)
-      loading.value = false
-    });
+    store.onRetrieveLocationByName(data)
+        .then((result) => {
+          console.log(`Busqueda completada`)
+          loading.value = false
+          itemsSearchResult.value = result
+        });
+  }
 }
-
-
-// Para obtener los datos
-const {items} = storeToRefs(store);
-
 
 // Para seleccionar un item de los datos obtenidos
-const onSelect = () => {
-
+const resultTerm = ref("");
+const onSelect = (event) => {
+  const value = event.value;
+  resultTerm.value = value.name;
+  store.setOriginLocation(value)
 }
 
+//Para mostrar el resultado final de la busqueda
 const startRute = computed(() => {
-  if (searchTerm.value.length > 3) {
-    return "origin: " + searchTerm.value
+  if (resultTerm.value.length > 3) {
+    return "origin: " + resultTerm.value
   } else {
     return "";
   }
@@ -66,7 +72,6 @@ const startRute = computed(() => {
       <v-card-title class="headline">Search Route</v-card-title>
 
       <v-card-text>
-        <p>{{ searchTerm }}</p>
         <v-text-field
           v-model="searchTerm"
           :loading="loading"
@@ -75,18 +80,19 @@ const startRute = computed(() => {
           density="compact"
           hide-details
           single-line
-          @input="onInput"
+          @input="onInput($event)"
         />
       </v-card-text>
 
       <v-list>
         <v-list-item
-          v-for="item in items"
+            v-for="item in itemsSearchResult"
           :key="item.title"
           :prepend-icon="item.icon"
           :subtitle="item.subtitle"
           :title="item.title"
-        ></v-list-item>
+            @click="onSelect($event)"
+        />
       </v-list>
     </v-card>
 
@@ -95,7 +101,7 @@ const startRute = computed(() => {
   <v-text-field
     v-model="startRute"
     label="Start Rute"
-    v-on:click="dialog = true"
+    @click="dialog = true"
   />
 </template>
 

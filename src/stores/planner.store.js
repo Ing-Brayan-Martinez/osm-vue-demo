@@ -10,17 +10,12 @@ import Optional from "optional-js";
 
 export const usePlannerStore = defineStore('planner', {
   state: () => ({
-    isVisibleResult: false,
-    startRute: "x",
-    endRute: "x",
-    items: [
-      {title: "Plantilla 1", subtitle: "Descripción de la plantilla 1", icon: "mdi-file"},
-      {title: "Plantilla 2", subtitle: "Descripción de la plantilla 2", icon: "mdi-file"},
-      {title: "Plantilla 3", subtitle: "Descripción de la plantilla 3", icon: "mdi-file"},
-    ]
+    startRute: null, //Se usa para guardar el resultado de la busqueda de ruta de origen
+    endRute: null, //Se usa para guardar el resultado de la busqueda de ruta de destino
+    items: [], //Se usa para guardar el resultado de la busqueda de todas las ruta de buses
   }),
   getters: {
-    //
+    isVisibleResult: (state) => state.items.length > 0,
   },
   actions: {
     /**
@@ -41,12 +36,13 @@ export const usePlannerStore = defineStore('planner', {
       }
     },
     /**
-     * Metodo para buscar una localizacion por su nombre desde el API para usarla como origen.
+     * Metodo para buscar una localizacion por su nombre desde el API para usarla como origen
+     * o destino.
      *
      * @param data
      * @returns {Promise<*>}
      */
-    async onRetrieveOriginLocationByName(data) {
+    async onRetrieveLocationByName(data) {
       try {
         const result = await retrieveLocationByName(data);
         //const any = R.map((list) => list, result);
@@ -59,20 +55,30 @@ export const usePlannerStore = defineStore('planner', {
       }
     },
     /**
-     * Metodo para buscar una localizacion por su nombre desde el API para usarla como destino.
+     * Metodo para establecer la ruta de destino.
      *
      * @param data
      * @returns {Promise<*>}
      */
-    async onRetrieveDestinationLocationByName(data) {
+    setOriginLocation(data) {
       try {
-        const result = await retrieveLocationByName(data);
-        //const any = R.map((list) => list, result);
-
+        this.startRute = data;
 
       } catch (error) {
-        //showTooltip(error)
-        //let the form component display the error
+        return error
+      }
+    },
+    /**
+     * Metodo para establecer la ruta de destino.
+     *
+     * @param data
+     * @returns {Promise<*>}
+     */
+    setDestinationLocation(data) {
+      try {
+        this.endRute = data;
+
+      } catch (error) {
         return error
       }
     },
