@@ -47,10 +47,9 @@ export const usePlannerStore = defineStore('planner', {
         const result = await retrieveLocationByName(data);
         //const any = R.map((list) => list, result);
 
+        return result ?? [];
 
       } catch (error) {
-        //showTooltip(error)
-        //let the form component display the error
         return error
       }
     },
@@ -94,8 +93,6 @@ export const usePlannerStore = defineStore('planner', {
         this.isVisibleResult = true;
 
       } catch (error) {
-        //showTooltip(error)
-        //let the form component display the error
         return error
       }
     },
@@ -110,8 +107,6 @@ export const usePlannerStore = defineStore('planner', {
         const any = R.map((list) => list, result);
 
       } catch (error) {
-        //showTooltip(error)
-        //let the form component display the error
         return error
       }
     },
@@ -126,8 +121,6 @@ export const usePlannerStore = defineStore('planner', {
         const any = R.map((list) => list, result);
 
       } catch (error) {
-        //showTooltip(error)
-        //let the form component display the error
         return error
       }
     },

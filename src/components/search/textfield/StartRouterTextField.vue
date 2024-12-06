@@ -80,6 +80,7 @@ const startRute = computed(() => {
           density="compact"
           hide-details
           single-line
+          clearable
           @input="onInput($event)"
         />
       </v-card-text>

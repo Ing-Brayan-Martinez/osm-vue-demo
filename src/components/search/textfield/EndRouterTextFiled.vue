@@ -81,6 +81,7 @@ const endRute = computed(() => {
           density="compact"
           hide-details
           single-line
+          clearable
           @input="onInput($event)"
         />
       </v-card-text>
@@ -102,7 +103,7 @@ const endRute = computed(() => {
   <v-text-field
     v-model="endRute"
     label="End Rute"
-    v-on:click="dialog = true"
+    @click="dialog = true"
   />
 </template>
 
