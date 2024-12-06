@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import {usePlannerStore} from "@/stores/planner.store.js";
 import {storeToRefs} from "pinia";
 
@@ -9,7 +9,7 @@ const store = usePlannerStore();
 // Para controlar el dialog
 const dialog = ref(false);
 
-// para controlar el campo de busqueda
+// para controlar el campo de búsqueda
 const searchTerm = ref("");
 const loading = ref(false);
 const rules = {
@@ -28,19 +28,30 @@ const onInput = () => {
     "maxNo": ""
   };
 
-  store.onRetrieveLocationByName(data)
+  store.onRetrieveDestinationLocationByName(data)
     .then(() => {
       console.log(`Busqueda completada: ${searchTerm.value}`)
       loading.value = false
     });
 }
 
+
+// Para obtener los datos
+const {items} = storeToRefs(store);
+
+
+// Para seleccionar un item de los datos obtenidos
 const onSelect = () => {
 
 }
 
-// Para obtener los datos
-const {endRute, items} = storeToRefs(store);
+const endRute = computed(() => {
+  if (searchTerm.value.length > 3) {
+    return "destination: " + searchTerm.value
+  } else {
+    return "";
+  }
+})
 
 </script>
 

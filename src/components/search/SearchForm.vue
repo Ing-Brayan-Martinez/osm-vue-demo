@@ -5,10 +5,22 @@ import StartRouterTextField from "@/components/search/textfield/StartRouterTextF
 import EndRouterTextFiled from "@/components/search/textfield/EndRouterTextFiled.vue";
 
 const store = usePlannerStore();
-const {increment} = store;
-const {count, doubleCount, isVisibleResult, startRute, endRute} = storeToRefs(store)
+const {isVisibleResult, startRute, endRute} = storeToRefs(store)
 
-const url = import.meta.env.VITE_API_URL;
+const onSearch = () => {
+  const param = {
+    "originCoordLong": "-74.119018",
+    "originCoordLat": "4.687623",
+    "destCoordLong": "-74.06546",
+    "destCoordLat": "4.643881",
+    "withFreq": "0",
+    "originWalk": "1,0,10000",
+    "destWalk": "1,0,10000",
+    "time": "08:00",
+  };
+
+  store.onRetrieveTripSearchDoor2Doors(param);
+}
 
 </script>
 
@@ -21,7 +33,7 @@ const url = import.meta.env.VITE_API_URL;
 
       <EndRouterTextFiled/>
 
-      <v-btn @click="increment">
+      <v-btn @click="onSearch">
         Search
       </v-btn>
 
@@ -32,10 +44,6 @@ const url = import.meta.env.VITE_API_URL;
       id="search-results"
     >
       <h1>Results</h1>
-      <p>{{ count }}</p>
-      <p>{{ doubleCount }}</p>
-      <p>La URL de la API es: {{ url }}</p>
-
       <p>{{ startRute }}</p>
       <p>{{ endRute }}</p>
     </div>
@@ -67,7 +75,7 @@ const url = import.meta.env.VITE_API_URL;
   border-radius: 10px;
 }
 
-#search-form-container > div[id="search-form"]  > h1 {
+#search-form-container > div[id="search-form"] > h1 {
   margin-top: 0px;
   margin-bottom: 10px;
 }
@@ -93,7 +101,7 @@ const url = import.meta.env.VITE_API_URL;
   border-radius: 10px;
 }
 
-#search-form-container > div[id="search-results"]  > h1 {
+#search-form-container > div[id="search-results"] > h1 {
   margin-top: 0px;
   margin-bottom: 0px;
 }

@@ -10,7 +10,6 @@ import Optional from "optional-js";
 
 export const usePlannerStore = defineStore('planner', {
   state: () => ({
-    count: 0,
     isVisibleResult: false,
     startRute: "x",
     endRute: "x",
@@ -21,21 +20,9 @@ export const usePlannerStore = defineStore('planner', {
     ]
   }),
   getters: {
-    doubleCount(state) {
-      return state.count * 2;
-    }
+    //
   },
   actions: {
-    increment() {
-      this.count++;
-      if (this.count <= 0) {
-        this.isVisibleResult = false;
-      } else {
-        if (this.isVisibleResult !== true) {
-          this.isVisibleResult = true;
-        }
-      }
-    },
     /**
      * Metodo para obtener la localizacion actual del usuario desde el localStorage.
      *
@@ -54,14 +41,34 @@ export const usePlannerStore = defineStore('planner', {
       }
     },
     /**
+     * Metodo para buscar una localizacion por su nombre desde el API para usarla como origen.
      *
      * @param data
      * @returns {Promise<*>}
      */
-    async onRetrieveLocationByName(data) {
+    async onRetrieveOriginLocationByName(data) {
       try {
         const result = await retrieveLocationByName(data);
         //const any = R.map((list) => list, result);
+
+
+      } catch (error) {
+        //showTooltip(error)
+        //let the form component display the error
+        return error
+      }
+    },
+    /**
+     * Metodo para buscar una localizacion por su nombre desde el API para usarla como destino.
+     *
+     * @param data
+     * @returns {Promise<*>}
+     */
+    async onRetrieveDestinationLocationByName(data) {
+      try {
+        const result = await retrieveLocationByName(data);
+        //const any = R.map((list) => list, result);
+
 
       } catch (error) {
         //showTooltip(error)
@@ -78,6 +85,7 @@ export const usePlannerStore = defineStore('planner', {
       try {
         const result = await retrieveTripSearchDoor2Door(data);
         const any = R.map((list) => list, result);
+        this.isVisibleResult = true;
 
       } catch (error) {
         //showTooltip(error)
