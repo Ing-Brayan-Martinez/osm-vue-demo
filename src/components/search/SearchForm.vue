@@ -1,11 +1,13 @@
 <script setup>
 import {storeToRefs} from "pinia";
 import {usePlannerStore} from "@/stores/planner.store.js";
-import StartRouterTextField from "@/components/search/textfield/StartRouterTextField.vue";
-import EndRouterTextFiled from "@/components/search/textfield/EndRouterTextFiled.vue";
+import StartLocalizationTextField
+  from "@/components/search/textfield/StartLocalizationTextField.vue";
+import EndLocalizationTextFiled from "@/components/search/textfield/EndLocalizationTextFiled.vue";
+
 
 const store = usePlannerStore();
-const {isVisibleResult, startRute, endRute} = storeToRefs(store)
+const {isVisibleResult, startLocalization, endLocalization} = storeToRefs(store)
 
 const onSearch = () => {
   const param = {
@@ -27,11 +29,11 @@ const onSearch = () => {
 <template>
   <div id="search-form-container">
     <div id="search-form">
-      <h1>Search rute</h1>
+      <h1>Search Route</h1>
 
-      <StartRouterTextField/>
+      <StartLocalizationTextField/>
 
-      <EndRouterTextFiled/>
+      <EndLocalizationTextFiled/>
 
       <v-btn @click="onSearch">
         Search
@@ -44,8 +46,8 @@ const onSearch = () => {
       id="search-results"
     >
       <h1>Results</h1>
-      <p>{{ startRute }}</p>
-      <p>{{ endRute }}</p>
+      <p>{{ startLocalization }}</p>
+      <p>{{ endLocalization }}</p>
     </div>
   </div>
 </template>

@@ -52,7 +52,7 @@ const onSelect = (event) => {
 }
 
 //Para mostrar el resultado final de la busqueda
-const endRute = computed(() => {
+const endLocalization = computed(() => {
   if (resultTerm.value.length > 3) {
     return "destination: " + resultTerm.value
   } else {
@@ -70,7 +70,7 @@ const endRute = computed(() => {
   >
     <v-card>
 
-      <v-card-title class="headline">Search Route</v-card-title>
+      <v-card-title class="headline">Search Localization</v-card-title>
 
       <v-card-text>
         <v-text-field
@@ -101,8 +101,8 @@ const endRute = computed(() => {
   </v-dialog>
 
   <v-text-field
-    v-model="endRute"
-    label="End Rute"
+    v-model="endLocalization"
+    label="End Localization"
     @click="dialog = true"
   />
 </template>

@@ -10,8 +10,10 @@ import Optional from "optional-js";
 
 export const usePlannerStore = defineStore('planner', {
   state: () => ({
-    startRute: null, //Se usa para guardar el resultado de la busqueda de ruta de origen
-    endRute: null, //Se usa para guardar el resultado de la busqueda de ruta de destino
+    startLocalization: null, //Se usa para guardar el resultado de la busqueda de la localizacion de
+    // origen
+    endLocalization: null, //Se usa para guardar el resultado de la busqueda de la localizacion de
+    // destino
     items: [], //Se usa para guardar el resultado de la busqueda de todas las ruta de buses
   }),
   getters: {
@@ -39,8 +41,10 @@ export const usePlannerStore = defineStore('planner', {
      * Metodo para buscar una localizacion por su nombre desde el API para usarla como origen
      * o destino.
      *
-     * @param data
-     * @returns {Promise<*>}
+     * @param data Parametros para la busqueda de la localizacion que contiene el nombre de
+     * dicha localizacion.
+     * @returns {Promise<[]>} Devuelve un Array con las posibles localizacion que coinciden con
+     * el termino de busqueda.
      */
     async onRetrieveLocationByName(data) {
       try {
@@ -56,12 +60,11 @@ export const usePlannerStore = defineStore('planner', {
     /**
      * Metodo para establecer la ruta de destino.
      *
-     * @param data
-     * @returns {Promise<*>}
+     * @param data Datos de la localizacion de origen.
      */
     setOriginLocation(data) {
       try {
-        this.startRute = data;
+        this.startLocalization = data;
 
       } catch (error) {
         return error
@@ -70,12 +73,11 @@ export const usePlannerStore = defineStore('planner', {
     /**
      * Metodo para establecer la ruta de destino.
      *
-     * @param data
-     * @returns {Promise<*>}
+     * @param data Datos de la localizacion de destino.
      */
     setDestinationLocation(data) {
       try {
-        this.endRute = data;
+        this.endLocalization = data;
 
       } catch (error) {
         return error
