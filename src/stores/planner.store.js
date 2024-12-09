@@ -69,12 +69,7 @@ export const usePlannerStore = defineStore('planner', {
      * @param data Datos de la localización de origen.
      */
     setOriginLocation(data) {
-      try {
-        this.startLocalization = data;
-
-      } catch (error) {
-        return error
-      }
+      this.startLocalization = data;
     },
     /**
      * Método para establecer la ruta de destino.
@@ -82,12 +77,7 @@ export const usePlannerStore = defineStore('planner', {
      * @param data Datos de la localización de destino.
      */
     setDestinationLocation(data) {
-      try {
-        this.endLocalization = data;
-
-      } catch (error) {
-        return error
-      }
+      this.endLocalization = data;
     },
     /**
      *

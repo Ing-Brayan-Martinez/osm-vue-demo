@@ -67,7 +67,7 @@ const startLocalization = computed(() => {
   >
     <v-card>
 
-      <v-card-title class="headline">Search Localization</v-card-title>
+      <v-card-title class="headline">Search Start Localization</v-card-title>
 
       <v-card-text>
         <v-text-field

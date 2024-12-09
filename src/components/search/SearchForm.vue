@@ -1,44 +1,54 @@
 <script setup>
+import {ref} from "vue";
 import {storeToRefs} from "pinia";
 import {usePlannerStore} from "@/stores/planner.store.js";
 import StartLocalizationTextField
   from "@/components/search/textfield/StartLocalizationTextField.vue";
 import EndLocalizationTextFiled from "@/components/search/textfield/EndLocalizationTextFiled.vue";
 import RouteCard from "@/components/search/card/RouteCard.vue";
-import {ref} from "vue";
+import SearchLoading from "@/components/search/icon/SearchLoading.vue";
 
 
 const store = usePlannerStore();
 const {startLocalization, endLocalization} = storeToRefs(store);
 
-const loading = ref(false);
-const isVisibleResult = ref(true);
+const isLoading = ref(false);
+const isVisibleResult = ref(false);
+
 const itemsSearchResult = ref([]);
 
 
 const onSearch = () => {
-  console.log("StartLocalization: " + startLocalization.value);
-  console.log("EndLocalization: " + endLocalization.value);
+  isLoading.value = true
+  isVisibleResult.value = true
 
-  const param = {
-    "originCoordLong": "-74.119018",
-    "originCoordLat": "4.687623",
-    "destCoordLong": "-74.06546",
-    "destCoordLat": "4.643881",
-    "withFreq": "0",
-    "originWalk": "1,0,10000",
-    "destWalk": "1,0,10000",
-    "time": "08:00",
-  };
+  if (startLocalization.value !== null && endLocalization.value !== null) {
 
-  store.onRetrieveTripSearchDoor2Doors(param)
-    .then((result) => {
-      if (Array.isArray(result)) {
-        loading.value = false
-        itemsSearchResult.value = result
-      }
-      console.log(`Busqueda completada`)
-    });
+    console.log("StartLocalization: " + startLocalization.value);
+    console.log("EndLocalization: " + endLocalization.value);
+
+    const param = {
+      "originCoordLong": "-74.119018",
+      "originCoordLat": "4.687623",
+      "destCoordLong": "-74.06546",
+      "destCoordLat": "4.643881",
+      "withFreq": "0",
+      "originWalk": "1,0,10000",
+      "destWalk": "1,0,10000",
+      "time": "08:00",
+    };
+
+    store.onRetrieveTripSearchDoor2Doors(param)
+      .then((result) => {
+        if (Array.isArray(result)) {
+          isLoading.value = false
+          itemsSearchResult.value = result
+        }
+        console.log(`Busqueda completada`)
+      });
+  } else {
+    alert("Debe ingresar un origen y un destino")
+  }
 }
 
 </script>
@@ -48,11 +58,11 @@ const onSearch = () => {
     <div id="search-form">
       <h1>Search Route</h1>
 
-      <StartLocalizationTextField/>
+      <StartLocalizationTextField class="search-input"/>
 
-      <EndLocalizationTextFiled/>
+      <EndLocalizationTextFiled class="search-input"/>
 
-      <v-btn @click="onSearch">
+      <v-btn class="search-button" @click="onSearch">
         Search
       </v-btn>
 
@@ -63,14 +73,27 @@ const onSearch = () => {
       id="search-results"
     >
       <h1>Results</h1>
-      <RouteCard v-for="route in itemsSearchResult"
-                 :key="route.id"
-                 :route="route"/>
+
+      <div v-if="isLoading" id="search-results-loading">
+        <p>Loading...</p>
+        <SearchLoading/>
+      </div>
+
+      <div v-else id="search-results-list">
+        <p>xczxczxc</p>
+        <RouteCard v-for="route in itemsSearchResult"
+                   :key="route.id"
+                   :route="route"/>
+      </div>
+
+
     </div>
   </div>
 </template>
 
-<style scoped>
+<style>
+@import '../../main.css';
+
 /* Estilos para el contenedor padre */
 
 #search-form-container {
@@ -91,7 +114,7 @@ const onSearch = () => {
   position: relative;
   padding: 10px;
   margin-bottom: 10px;
-  background-color: white;
+  background-color: var(--maas-white);
   border-radius: 10px;
 }
 
@@ -100,14 +123,13 @@ const onSearch = () => {
   margin-bottom: 10px;
 }
 
-#search-form-container > div[id="search-form"] > input[type="text"] {
-  width: 97%;
-  margin-bottom: 8px;
+.search-input {
   border-radius: 5px;
 }
 
-#search-form-container > div[id="search-form"] > button {
-  border-radius: 10px;
+.search-button {
+  margin-top: 0px;
+  margin-bottom: 10px;
 }
 
 /* Estilos para el resultado de búsqueda */
@@ -117,7 +139,7 @@ const onSearch = () => {
   padding: 10px;
   height: 308px;
   margin-bottom: 10px;
-  background-color: white;
+  background-color: var(--maas-white);
   border-radius: 10px;
 }
 
@@ -125,4 +147,21 @@ const onSearch = () => {
   margin-top: 0px;
   margin-bottom: 0px;
 }
+
+#search-form-container > div[id="search-results"] > div[id="search-results-loading"] {
+  margin-top: 0px;
+  margin-bottom: 0px;
+
+  width: 100%;
+  height: 100%;
+  background-color: red;
+}
+
+#search-form-container > div[id="search-results"] > div[id="search-results-list"] {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  background-color: red;
+}
+
+
 </style>
