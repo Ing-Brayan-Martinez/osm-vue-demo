@@ -11,11 +11,7 @@ const dialog = ref(false);
 // para controlar el campo de búsqueda
 const searchTerm = ref("");
 const loading = ref(false);
-const itemsSearchResult = ref([
-  {title: "Plantilla 1", subtitle: "Descripción de la plantilla 1", icon: "mdi-file"},
-  {title: "Plantilla 2", subtitle: "Descripción de la plantilla 2", icon: "mdi-file"},
-  {title: "Plantilla 3", subtitle: "Descripción de la plantilla 3", icon: "mdi-file"},
-]);
+const itemsSearchResult = ref([]);
 const rules = {
   required: v => !!v || 'Este campo es requerido'
 };
@@ -36,9 +32,11 @@ const onInput = (event) => {
 
     store.onRetrieveLocationByName(data)
       .then((result) => {
+        if (Array.isArray(result)) {
+          loading.value = false
+          itemsSearchResult.value = result
+        }
         console.log(`Busqueda completada`)
-        loading.value = false
-        itemsSearchResult.value = result
       });
   }
 }

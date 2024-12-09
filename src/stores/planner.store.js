@@ -10,20 +10,19 @@ import Optional from "optional-js";
 
 export const usePlannerStore = defineStore('planner', {
   state: () => ({
-    startLocalization: null, //Se usa para guardar el resultado de la busqueda de la localizacion de
+    startLocalization: null, //Se usa para guardar el resultado de la búsqueda de la localización de
     // origen
-    endLocalization: null, //Se usa para guardar el resultado de la busqueda de la localizacion de
+    endLocalization: null, //Se usa para guardar el resultado de la búsqueda de la localización de
     // destino
-    items: [], //Se usa para guardar el resultado de la busqueda de todas las ruta de buses
   }),
   getters: {
-    isVisibleResult: (state) => state.items.length > 0,
+    //
   },
   actions: {
     /**
-     * Metodo para obtener la localizacion actual del usuario desde el localStorage.
+     * Método para obtener la localización actual del usuario desde el localStorage.
      *
-     * @returns {Optional<Object | null>} - Devuelve un Optional con la localizacion actual del
+     * @returns {Optional<Object | null>} - Devuelve un Optional con la localización actual del
      * usuario, si no esta se devuelve un Optional vacio.
      */
     getLocationFromConfig() {
@@ -38,29 +37,36 @@ export const usePlannerStore = defineStore('planner', {
       }
     },
     /**
-     * Metodo para buscar una localizacion por su nombre desde el API para usarla como origen
+     * Método para buscar una localización por su nombre desde el API para usarla como origen
      * o destino.
      *
-     * @param data Parametros para la busqueda de la localizacion que contiene el nombre de
-     * dicha localizacion.
-     * @returns {Promise<[]>} Devuelve un Array con las posibles localizacion que coinciden con
-     * el termino de busqueda.
+     * @param data Parámetros para la búsqueda de la localización que contiene el nombre de
+     * dicha localización.
+     * @returns {Promise<[]>} Devuelve un Array con las posibles localización que coinciden con
+     * el termino de búsqueda.
      */
     async onRetrieveLocationByName(data) {
       try {
         const result = await retrieveLocationByName(data);
-        //const any = R.map((list) => list, result);
 
-        return result ?? [];
+        if (result === null || result === undefined) {
+          return [];
+        } else if (result.data === null || result.data === undefined) {
+          return [];
+        } else if (result.data.stopLocationOrCoordLocation === null
+          || result.data.stopLocationOrCoordLocation === undefined) {
+          return [];
+        }
+        return result.data.stopLocationOrCoordLocation;
 
       } catch (error) {
         return error
       }
     },
     /**
-     * Metodo para establecer la ruta de destino.
+     * Método para establecer la ruta de destino.
      *
-     * @param data Datos de la localizacion de origen.
+     * @param data Datos de la localización de origen.
      */
     setOriginLocation(data) {
       try {
@@ -71,9 +77,9 @@ export const usePlannerStore = defineStore('planner', {
       }
     },
     /**
-     * Metodo para establecer la ruta de destino.
+     * Método para establecer la ruta de destino.
      *
-     * @param data Datos de la localizacion de destino.
+     * @param data Datos de la localización de destino.
      */
     setDestinationLocation(data) {
       try {
@@ -91,8 +97,15 @@ export const usePlannerStore = defineStore('planner', {
     async onRetrieveTripSearchDoor2Doors(data) {
       try {
         const result = await retrieveTripSearchDoor2Door(data);
-        const any = R.map((list) => list, result);
-        this.isVisibleResult = true;
+        if (result === null || result === undefined) {
+          return [];
+        } else if (result.data === null || result.data === undefined) {
+          return [];
+        } else if (result.data.stopLocationOrCoordLocation === null
+          || result.data.stopLocationOrCoordLocation === undefined) {
+          return [];
+        }
+        return result.data.stopLocationOrCoordLocation;
 
       } catch (error) {
         return error

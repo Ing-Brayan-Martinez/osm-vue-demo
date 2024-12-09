@@ -4,12 +4,22 @@ import {usePlannerStore} from "@/stores/planner.store.js";
 import StartLocalizationTextField
   from "@/components/search/textfield/StartLocalizationTextField.vue";
 import EndLocalizationTextFiled from "@/components/search/textfield/EndLocalizationTextFiled.vue";
+import RouteCard from "@/components/search/card/RouteCard.vue";
+import {ref} from "vue";
 
 
 const store = usePlannerStore();
-const {isVisibleResult, startLocalization, endLocalization} = storeToRefs(store)
+const {startLocalization, endLocalization} = storeToRefs(store);
+
+const loading = ref(false);
+const isVisibleResult = ref(true);
+const itemsSearchResult = ref([]);
+
 
 const onSearch = () => {
+  console.log("StartLocalization: " + startLocalization.value);
+  console.log("EndLocalization: " + endLocalization.value);
+
   const param = {
     "originCoordLong": "-74.119018",
     "originCoordLat": "4.687623",
@@ -21,7 +31,14 @@ const onSearch = () => {
     "time": "08:00",
   };
 
-  store.onRetrieveTripSearchDoor2Doors(param);
+  store.onRetrieveTripSearchDoor2Doors(param)
+    .then((result) => {
+      if (Array.isArray(result)) {
+        loading.value = false
+        itemsSearchResult.value = result
+      }
+      console.log(`Busqueda completada`)
+    });
 }
 
 </script>
@@ -46,8 +63,9 @@ const onSearch = () => {
       id="search-results"
     >
       <h1>Results</h1>
-      <p>{{ startLocalization }}</p>
-      <p>{{ endLocalization }}</p>
+      <RouteCard v-for="route in itemsSearchResult"
+                 :key="route.id"
+                 :route="route"/>
     </div>
   </div>
 </template>
