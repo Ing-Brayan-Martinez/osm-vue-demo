@@ -1,4 +1,5 @@
 import {describe, expect, it} from "vitest";
+import {add, compose, multiply} from "ramda";
 import {
   retrieveGisRoute,
   retrieveJourneyDetail,
@@ -20,6 +21,9 @@ describe("RoutePlanner", () => {
       await retrieveLocationByName(param);
 
     console.log(result);
+    console.log(result.data.stopLocationOrCoordLocation)
+
+    console.log(compose(Math.abs, add(1), multiply(2))(-4));
 
     expect(result).not.toBeNull();
     console.log("Test Passed !!!");
