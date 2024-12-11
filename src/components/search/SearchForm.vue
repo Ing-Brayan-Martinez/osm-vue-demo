@@ -51,6 +51,7 @@ const onSearch = () => {
   }
 }
 
+
 </script>
 
 <template>
@@ -75,8 +76,7 @@ const onSearch = () => {
       <h1>Results</h1>
 
       <div v-if="isLoading" id="search-results-loading">
-        <p>Loading...</p>
-        <SearchLoading/>
+        <SearchLoading class="loading"/>
       </div>
 
       <div v-else id="search-results-list">
@@ -132,7 +132,8 @@ const onSearch = () => {
   margin-bottom: 10px;
 }
 
-/* Estilos para el resultado de búsqueda */
+
+/* Estilos para el resultado de la búsqueda */
 
 #search-form-container > div[id="search-results"] {
   position: relative;
@@ -154,7 +155,10 @@ const onSearch = () => {
 
   width: 100%;
   height: 100%;
-  background-color: red;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #search-form-container > div[id="search-results"] > div[id="search-results-list"] {
@@ -163,5 +167,9 @@ const onSearch = () => {
   background-color: red;
 }
 
+.loading {
+  width: 100px;
+  height: 100px;
+}
 
 </style>

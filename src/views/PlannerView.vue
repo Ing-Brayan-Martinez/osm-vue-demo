@@ -24,7 +24,10 @@ onMounted(async () => {
   const view = new MapView({
     container: container.value,
     map: webmap,
-    center: [-74.1, 4.65],
+    center: [
+      -74.1, //la longitud eje X
+      4.6    //la latitud eje Y
+    ],
     zoom: 14,
   });
 
@@ -36,10 +39,11 @@ onMounted(async () => {
   if (positionOpt.isPresent()) {
     const coordinate = positionOpt.get();
 
-    const longitude = coordinate.longitude;
-    const latitude = coordinate.latitude;
+    const longitude = coordinate.longitude; // Es el eje X
+    const latitude = coordinate.latitude; // Es el eje Y
 
-    view.center = [longitude, latitude];
+    //TODO: Falta validar las coordenadas no esten fuera de la ciudad de Bogota
+    //view.center = [longitude, latitude];
   }
 
   // Create a zoom widget

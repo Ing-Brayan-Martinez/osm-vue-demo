@@ -33,7 +33,8 @@ export const useSplashStore = defineStore('splash', {
 
                 if (DEBUG) {
                   console.log(position);
-                  console.log('La ubicación es: ', position.coords.latitude, 'y esta: ', position.coords.longitude);
+                  console.log('La latitud eje Y es: ', position.coords.latitude, 'y la longitud' +
+                    ' eje X es: ', position.coords.longitude);
                 }
 
                 //se debe guardar en el localstorage
