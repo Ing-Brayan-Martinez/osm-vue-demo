@@ -7,6 +7,7 @@ import StartLocalizationTextField
 import EndLocalizationTextFiled from "@/components/search/textfield/EndLocalizationTextFiled.vue";
 import RouteCard from "@/components/search/card/RouteCard.vue";
 import SearchLoading from "@/components/search/icon/SearchLoading.vue";
+import {DEBUG} from "@/config/config.js";
 
 
 const store = usePlannerStore();
@@ -41,13 +42,28 @@ const onSearch = () => {
     store.onRetrieveTripSearchDoor2Doors(param)
       .then((result) => {
         if (Array.isArray(result)) {
-          isLoading.value = false
-          itemsSearchResult.value = result
+          if (result.length > 0) {
+            isLoading.value = false
+            itemsSearchResult.value = result
+            if (DEBUG) {
+              console.log(`Búsqueda completada`)
+            }
+          } else {
+            isLoading.value = false
+            isVisibleResult.value = false
+            itemsSearchResult.value = []
+
+            alert("No results found")
+          }
         }
-        console.log(`Busqueda completada`)
       });
   } else {
-    alert("Debe ingresar un origen y un destino")
+    isLoading.value = false
+    isVisibleResult.value = false
+    itemsSearchResult.value = []
+
+    alert("You must enter an origin and a destination")
+
   }
 }
 

@@ -42,6 +42,7 @@ const onInput = () => {
               console.log(`Búsqueda completada`)
             }
           } else {
+            itemsSearchResult.value = []
             alert(`No se encontraron resultados`)
           }
         }
@@ -73,7 +74,7 @@ const onSelect = (value) => {
 //Para mostrar el resultado final de la busqueda
 const endLocalization = computed(() => {
   if (resultTerm.value.length > 3) {
-    return "destination: " + resultTerm.value
+    return "Destination: " + resultTerm.value
   } else {
     return "";
   }
