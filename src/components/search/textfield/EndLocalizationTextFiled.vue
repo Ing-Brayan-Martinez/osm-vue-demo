@@ -17,11 +17,10 @@ const rules = {
 };
 
 // Para buscar los datos
-const onInput = (event) => {
+const onInput = () => {
   if (searchTerm.value.length > 3) {
     loading.value = true
     console.log(`Buscando: ${searchTerm.value}`)
-    console.log(`Event: ${event}`)
 
     const data = {
       "input": `${searchTerm.value}`,
@@ -33,10 +32,15 @@ const onInput = (event) => {
     store.onRetrieveLocationByName(data)
       .then((result) => {
         if (Array.isArray(result)) {
-          loading.value = false
-          itemsSearchResult.value = result
+          if (result.length > 0) {
+            loading.value = false
+            itemsSearchResult.value = result
+            console.log(`Búsqueda completada`)
+          } else {
+            console.log(`No se encontraron resultados`)
+            alert(`No se encontraron resultados`)
+          }
         }
-        console.log(`Busqueda completada`)
       });
   }
 }
@@ -80,7 +84,7 @@ const endLocalization = computed(() => {
           hide-details
           single-line
           clearable
-          @input="onInput($event)"
+          @input="onInput()"
         />
       </v-card-text>
 
@@ -90,7 +94,7 @@ const endLocalization = computed(() => {
           :key="item.title"
           :prepend-icon="item.icon"
           :subtitle="item.subtitle"
-          :title="item.title"
+          :title="item.name()"
           @click="onSelect($event)"
         />
       </v-list>
