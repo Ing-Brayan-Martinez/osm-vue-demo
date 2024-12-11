@@ -47,10 +47,17 @@ const onInput = () => {
 
 // Para seleccionar un item de los datos obtenidos
 const resultTerm = ref("");
-const onSelect = (event) => {
-  const value = event.value;
-  resultTerm.value = value.name;
+const onSelect = (event, value) => {
+  // set value
+  console.log(event)
+  console.log(event.srcElement.innerText)
+  resultTerm.value = event.srcElement.innerText;
   store.setOriginLocation(value)
+
+  // clean
+  dialog.value = false
+  searchTerm.value = ""
+  itemsSearchResult.value = []
 }
 
 //Para mostrar el resultado final de la busqueda
@@ -90,11 +97,8 @@ const startLocalization = computed(() => {
       <v-list>
         <v-list-item
           v-for="item in itemsSearchResult"
-          :key="item.title"
-          :prepend-icon="item.icon"
-          :subtitle="item.subtitle"
-          :title="item.name()"
-          @click="onSelect($event)"
+          :title="item.StopLocation.name"
+          @click="onSelect($event, item.StopLocation)"
         />
       </v-list>
     </v-card>

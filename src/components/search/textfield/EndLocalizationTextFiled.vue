@@ -8,7 +8,7 @@ const store = usePlannerStore();
 // Para controlar el dialog
 const dialog = ref(false);
 
-// para controlar el campo de búsqueda
+// Para controlar el campo de búsqueda
 const searchTerm = ref("");
 const loading = ref(false);
 const itemsSearchResult = ref([]);
@@ -47,10 +47,17 @@ const onInput = () => {
 
 // Para seleccionar un item de los datos obtenidos
 const resultTerm = ref("");
-const onSelect = (event) => {
-  const value = event.value;
-  resultTerm.value = value.name;
+const onSelect = (event, value) => {
+  // set value
+  console.log(event)
+  console.log(event.srcElement.innerText)
+  resultTerm.value = event.srcElement.innerText;
   store.setDestinationLocation(value)
+
+  // clean
+  dialog.value = false
+  searchTerm.value = ""
+  itemsSearchResult.value = []
 }
 
 //Para mostrar el resultado final de la busqueda
@@ -91,10 +98,7 @@ const endLocalization = computed(() => {
       <v-list>
         <v-list-item
           v-for="item in itemsSearchResult"
-          :key="item.title"
-          :prepend-icon="item.icon"
-          :subtitle="item.subtitle"
-          :title="item.name()"
+          :title="item.StopLocation.name"
           @click="onSelect($event)"
         />
       </v-list>
