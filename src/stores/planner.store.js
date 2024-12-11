@@ -91,11 +91,15 @@ export const usePlannerStore = defineStore('planner', {
           return [];
         } else if (result.data === null || result.data === undefined) {
           return [];
-        } else if (result.data.stopLocationOrCoordLocation === null
-          || result.data.stopLocationOrCoordLocation === undefined) {
+        } else if (result.data.Trip === null
+          || result.data.Trip === undefined) {
           return [];
         }
-        return result.data.stopLocationOrCoordLocation;
+
+        console.log(result);
+        console.log(result.data.Trip);
+
+        return result.data.Trip;
 
       } catch (error) {
         return error

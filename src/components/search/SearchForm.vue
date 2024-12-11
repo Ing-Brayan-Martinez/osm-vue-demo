@@ -63,7 +63,6 @@ const onSearch = () => {
     itemsSearchResult.value = []
 
     alert("You must enter an origin and a destination")
-
   }
 }
 
@@ -96,10 +95,9 @@ const onSearch = () => {
       </div>
 
       <div v-else id="search-results-list">
-        <p>xczxczxc</p>
-        <RouteCard v-for="route in itemsSearchResult"
-                   :key="route.id"
-                   :route="route"/>
+        <RouteCard v-for="item in itemsSearchResult"
+                   :key="item.idx"
+                   :name="item.duration"/>
       </div>
 
 

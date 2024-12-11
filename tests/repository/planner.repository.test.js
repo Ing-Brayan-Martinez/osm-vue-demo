@@ -45,6 +45,7 @@ describe("RoutePlanner", () => {
       await retrieveTripSearchDoor2Door(param);
 
     console.log(result);
+    console.log(result.data.Trip);
 
     expect(result).not.toBeNull();
     console.log("Test Passed !!!");

@@ -8,7 +8,6 @@ import SearchForm from "@/components/search/SearchForm.vue";
 import {usePlannerStore} from "@/stores/planner.store.js";
 
 
-// https://v3.vuejs.org/api/instance-properties.html#el
 // https://vuejs.org/guide/essentials/template-refs.html
 const container = useTemplateRef('my-input');
 
