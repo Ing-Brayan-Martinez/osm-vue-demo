@@ -80,9 +80,12 @@ export const usePlannerStore = defineStore('planner', {
       this.endLocalization = data;
     },
     /**
+     * Método para obtener la ruta de un viaje.
      *
-     * @param data
-     * @returns {Promise<*>}
+     * @param data Parámetros para la búsqueda de la ruta usando los datos de la localización de
+     * origen y destino.
+     * @returns {Promise<[]>} Devuelve un Array con las posibles rutas que coinciden con las
+     * localizaciones de origen y destino.
      */
     async onRetrieveTripSearchDoor2Doors(data) {
       try {
@@ -95,9 +98,6 @@ export const usePlannerStore = defineStore('planner', {
           || result.data.Trip === undefined) {
           return [];
         }
-
-        console.log(result);
-        console.log(result.data.Trip);
 
         return result.data.Trip;
 

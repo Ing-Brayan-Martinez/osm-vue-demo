@@ -23,47 +23,77 @@ const onSearch = () => {
   isLoading.value = true
   isVisibleResult.value = true
 
-  if (startLocalization.value !== null && endLocalization.value !== null) {
-
-    console.log("StartLocalization: " + startLocalization.value);
-    console.log("EndLocalization: " + endLocalization.value);
-
-    const param = {
-      "originCoordLong": "-74.119018",
-      "originCoordLat": "4.687623",
-      "destCoordLong": "-74.06546",
-      "destCoordLat": "4.643881",
-      "withFreq": "0",
-      "originWalk": "1,0,10000",
-      "destWalk": "1,0,10000",
-      "time": "08:00",
-    };
-
-    store.onRetrieveTripSearchDoor2Doors(param)
-      .then((result) => {
-        if (Array.isArray(result)) {
-          if (result.length > 0) {
-            isLoading.value = false
-            itemsSearchResult.value = result
-            if (DEBUG) {
-              console.log(`Búsqueda completada`)
-            }
-          } else {
-            isLoading.value = false
-            isVisibleResult.value = false
-            itemsSearchResult.value = []
-
-            alert("No results found")
-          }
-        }
-      });
-  } else {
+  if (startLocalization.value === null && endLocalization.value === null) {
     isLoading.value = false
     isVisibleResult.value = false
     itemsSearchResult.value = []
 
     alert("You must enter an origin and a destination")
+    return;
   }
+
+  const originCoordLong = String(startLocalization.value.lon);
+  const originCoordLat = String(startLocalization.value.lat);
+  const destCoordLong = String(endLocalization.value.lon);
+  const destCoordLat = String(endLocalization.value.lat);
+
+  if (originCoordLong === "" || originCoordLat === "" || destCoordLong === "" || destCoordLat === "") {
+    isLoading.value = false
+    isVisibleResult.value = false
+    itemsSearchResult.value = []
+
+    alert("You must enter an origin and a destination 2")
+    return;
+  }
+
+  if (originCoordLong === destCoordLong && originCoordLat === destCoordLat) {
+    isLoading.value = false
+    isVisibleResult.value = false
+    itemsSearchResult.value = []
+
+    alert("You must enter different origin and destination")
+    return;
+  }
+
+  let now = new Date();
+  let hours = now.getHours();
+  let minutes = now.getMinutes();
+
+  let formattedTime = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
+
+  const param = {
+    "originCoordLong": originCoordLong,
+    "originCoordLat": originCoordLat,
+    "destCoordLong": destCoordLong,
+    "destCoordLat": destCoordLat,
+    "withFreq": "0",
+    "originWalk": "1,0,10000",
+    "destWalk": "1,0,10000",
+    "time": formattedTime,
+  };
+
+  store.onRetrieveTripSearchDoor2Doors(param)
+    .then((result) => {
+      if (Array.isArray(result)) {
+        if (result.length > 0) {
+          isLoading.value = false
+          itemsSearchResult.value = result
+          if (DEBUG) {
+            console.log(`Búsqueda completada`)
+          }
+        } else {
+          isLoading.value = false
+          isVisibleResult.value = false
+          itemsSearchResult.value = []
+
+          alert("No results found")
+        }
+      }
+    });
+
+  // alert("la longitud y latitud de origen son: " + originCoordLong + " y " +
+  //   originCoordLat + " y la longitud y latitud de destino son: " +
+  //   destCoordLong + " y " + destCoordLat);
 }
 
 
@@ -100,13 +130,13 @@ const onSearch = () => {
                    :name="item.duration"/>
       </div>
 
-
     </div>
   </div>
 </template>
 
 <style>
 @import '../../main.css';
+
 
 /* Estilos para el contenedor padre */
 
@@ -178,7 +208,11 @@ const onSearch = () => {
 #search-form-container > div[id="search-results"] > div[id="search-results-list"] {
   margin-top: 0px;
   margin-bottom: 0px;
-  background-color: red;
+
+  width: 100%;
+  height: 238px;
+
+  overflow-y: auto;
 }
 
 .loading {

@@ -1,5 +1,5 @@
 <script setup>
-import {computed, onMounted, ref} from "vue";
+import {computed, ref} from "vue";
 import {usePlannerStore} from "@/stores/planner.store.js";
 import {DEBUG} from "@/config/config.js";
 
@@ -86,10 +86,6 @@ const onCancel = () => {
   searchTerm.value = ""
   itemsSearchResult.value = []
 }
-
-onMounted(() => {
-  store.setDestinationLocation(null);
-})
 </script>
 
 <template>
@@ -125,6 +121,7 @@ onMounted(() => {
       <v-list>
         <v-list-item
           v-for="item in itemsSearchResult"
+          :key="item.StopLocation.id"
           :title="item.StopLocation.name"
           @click="onSelect(item.StopLocation)"
         />
