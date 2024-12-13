@@ -90,6 +90,7 @@ export const usePlannerStore = defineStore('planner', {
     async onRetrieveTripSearchDoor2Doors(data) {
       try {
         const result = await retrieveTripSearchDoor2Door(data);
+
         if (result === null || result === undefined) {
           return [];
         } else if (result.data === null || result.data === undefined) {
@@ -98,7 +99,6 @@ export const usePlannerStore = defineStore('planner', {
           || result.data.Trip === undefined) {
           return [];
         }
-
         return result.data.Trip;
 
       } catch (error) {
@@ -113,7 +113,20 @@ export const usePlannerStore = defineStore('planner', {
     async onRetrieveGisRoute(data) {
       try {
         const result = await retrieveGisRoute(data);
-        const any = R.map((list) => list, result);
+
+        if (result === null || result === undefined) {
+          return [];
+        } else if (result.data === null || result.data === undefined) {
+          return [];
+        } else if (result.data.Trip === null
+          || result.data.Trip === undefined) {
+          return [];
+        }
+
+        console.log(result);
+        console.log(result.data.Trip);
+
+        return result.data.Trip;
 
       } catch (error) {
         return error

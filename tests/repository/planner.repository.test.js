@@ -44,8 +44,14 @@ describe("RoutePlanner", () => {
     const result =
       await retrieveTripSearchDoor2Door(param);
 
-    console.log(result);
-    console.log(result.data.Trip);
+    console.log();
+
+    for (const item of result.data.Trip) {
+      console.log(item);
+      console.log();
+      //console.log(item.ServiceDays);
+      //console.log(item.LegList.Leg);
+    }
 
     expect(result).not.toBeNull();
     console.log("Test Passed !!!");
@@ -62,6 +68,7 @@ describe("RoutePlanner", () => {
       await retrieveGisRoute(param);
 
     console.log(result);
+    console.log(result.data.Trip);
 
     expect(result).not.toBeNull();
     console.log("Test Passed !!!");

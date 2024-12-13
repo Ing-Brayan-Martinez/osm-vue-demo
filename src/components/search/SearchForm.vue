@@ -126,8 +126,7 @@ const onSearch = () => {
 
       <div v-else id="search-results-list">
         <RouteCard v-for="item in itemsSearchResult"
-                   :key="item.idx"
-                   :name="item.duration"/>
+                   :item="item"/>
       </div>
 
     </div>
@@ -151,7 +150,6 @@ const onSearch = () => {
   z-index: 1;
 }
 
-
 /* Estilos para el formulario de búsqueda */
 
 #search-form-container > div[id="search-form"] {
@@ -160,6 +158,8 @@ const onSearch = () => {
   margin-bottom: 10px;
   background-color: var(--maas-white);
   border-radius: 10px;
+
+  border: 1px solid #000;
 }
 
 #search-form-container > div[id="search-form"] > h1 {
@@ -186,6 +186,8 @@ const onSearch = () => {
   margin-bottom: 10px;
   background-color: var(--maas-white);
   border-radius: 10px;
+
+  border: 1px solid #000;
 }
 
 #search-form-container > div[id="search-results"] > h1 {
@@ -218,6 +220,17 @@ const onSearch = () => {
 .loading {
   width: 100px;
   height: 100px;
+}
+
+/* Estilos para pantallas móviles (alto mínimo de 767px) */
+@media (min-height: 767px) {
+  #search-form-container > div[id="search-results"] {
+    height: 600px;
+  }
+
+  #search-form-container > div[id="search-results"] > div[id="search-results-list"] {
+    height: 528px;
+  }
 }
 
 </style>
