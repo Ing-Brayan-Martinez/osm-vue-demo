@@ -3,7 +3,7 @@
 </template>
 
 <style>
-@import '../../../main.css';
+@import '../../main.css';
 
 .custom-loader {
   width: 50px;

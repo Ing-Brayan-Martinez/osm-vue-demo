@@ -4,15 +4,17 @@ import MapView from "@arcgis/core/views/MapView";
 import Zoom from "@arcgis/core/widgets/Zoom";
 import BasemapToggle from "@arcgis/core/widgets/BasemapToggle";
 import {onMounted, useTemplateRef} from "vue";
-import SearchForm from "@/components/search/SearchForm.vue";
 import {usePlannerStore} from "@/stores/planner.store.js";
+import Splash from "@/components/splash/Splash.vue";
+import SearchForm from "@/components/form/SearchForm.vue";
 
+// Store
+const store = usePlannerStore();
 
 // https://vuejs.org/guide/essentials/template-refs.html
 const container = useTemplateRef('my-input');
 
 onMounted(async () => {
-  const store = usePlannerStore();
 
   const webmap = new WebMap({
     portalItem: {
@@ -63,6 +65,9 @@ onMounted(async () => {
 </script>
 
 <template>
+  <!--Para evitar que se muestre la carga del mapa.-->
+  <Splash/>
+
   <div
     ref="my-input"
     class="mapdiv"

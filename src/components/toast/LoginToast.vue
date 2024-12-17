@@ -1,6 +1,6 @@
 <script setup>
 import {defineProps} from "vue";
-import Loading from "@/components/splash/icons/Loading.vue";
+import Loading from "@/components/icon/Loading.vue";
 
 const props = defineProps({
   message: {

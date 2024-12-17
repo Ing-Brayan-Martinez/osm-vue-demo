@@ -1,41 +1,48 @@
 <script setup>
-import IconMaasLogo from "@/components/splash/icons/IconMaasLogo.vue";
-import Loading from "@/components/splash/icons/Loading.vue";
+import IconMaasLogo from "@/components/icon/IconMaasLogo.vue";
+import Loading from "@/components/icon/Loading.vue";
 import {onMounted} from "vue";
-import {useSplashStore} from "@/stores/splash.store.js";
-import {useNavigatorStore} from "@/stores/navigator.store.js";
-import {SplashStatus} from "@/config/enums.js";
+import {usePlannerStore} from "@/stores/planner.store.js";
+import {storeToRefs} from "pinia";
+
+const store = usePlannerStore();
+const {isShowSplash} = storeToRefs(store);
 
 onMounted(async () => {
-  const navigator = useNavigatorStore();
-  const result = await useSplashStore().onStart();
-
-  if (result === SplashStatus.SUCCESS) {
-    navigator.navigateTo("/main");
-  } else if (result === SplashStatus.SUCCESS_NOT_LOCATION) {
-    navigator.navigateTo("/main");
-  } else if (result === SplashStatus.FAILURE) {
-    navigator.navigateTo("/splash");
-  }
+  await store.onStart();
 });
 </script>
 
 <template>
-  <div id="splash-logo-container">
-    <IconMaasLogo/>
-    <h1>Web Planner</h1>
-    <p>
-      The Maas platform web planner is an ideal tool for finding transport routes that will take
-      you to your destination.
-    </p>
-    <Loading/>
+  <div v-if="isShowSplash" id="splash-layer">
+    <div id="splash-logo-container">
+      <IconMaasLogo/>
+      <h1>Web Planner</h1>
+      <p>
+        The Maas platform web planner is an ideal tool for finding transport routes that will take
+        you to your destination.
+      </p>
+      <Loading/>
+    </div>
   </div>
 </template>
 
 <style>
 @import '../../main.css';
 
-div[id="splash-logo-container"] {
+#splash-layer {
+  width: 100%;
+  height: 100vh;
+
+  background-color: var(--maas-white);
+
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 2;
+}
+
+#splash-layer > div[id="splash-logo-container"] {
   width: 470px;
   height: 390px;
   padding: 20px;
@@ -51,13 +58,14 @@ div[id="splash-logo-container"] {
   align-items: center;
 
   border-radius: 10px;
+  border: 1px solid #000;
 }
 
-div[id="splash-logo-container"] > svg {
+#splash-layer > div[id="splash-logo-container"] > svg {
   width: 300px;
 }
 
-div[id="splash-logo-container"] > h1 {
+#splash-layer > div[id="splash-logo-container"] > h1 {
   font-family: "Rubik", sans-serif;
   font-optical-sizing: auto;
   font-weight: 700;
@@ -66,7 +74,7 @@ div[id="splash-logo-container"] > h1 {
   color: var(--maas-white);
 }
 
-div[id="splash-logo-container"] > p {
+#splash-layer > div[id="splash-logo-container"] > p {
   font-family: "Rubik", sans-serif;
   font-optical-sizing: auto;
   font-weight: 500;

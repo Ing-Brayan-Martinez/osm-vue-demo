@@ -138,7 +138,7 @@ const onCancel = () => {
 </template>
 
 <style>
-@import '../../../main.css';
+@import '../../main.css';
 
 .custom-btn {
   margin-left: 10px; /* Create separation between text field and button */

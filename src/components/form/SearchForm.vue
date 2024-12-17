@@ -2,11 +2,10 @@
 import {ref} from "vue";
 import {storeToRefs} from "pinia";
 import {usePlannerStore} from "@/stores/planner.store.js";
-import StartLocalizationTextField
-  from "@/components/search/textfield/StartLocalizationTextField.vue";
-import EndLocalizationTextFiled from "@/components/search/textfield/EndLocalizationTextFiled.vue";
-import RouteCard from "@/components/search/card/RouteCard.vue";
-import SearchLoading from "@/components/search/icon/SearchLoading.vue";
+import StartLocalizationTextField from "@/components/textfield/StartLocalizationTextField.vue";
+import EndLocalizationTextFiled from "@/components/textfield/EndLocalizationTextFiled.vue";
+import RouteCard from "@/components/card/RouteCard.vue";
+import SearchLoading from "@/components/icon/SearchLoading.vue";
 import {DEBUG} from "@/config/config.js";
 
 
@@ -70,6 +69,7 @@ const onSearch = () => {
     "originWalk": "1,0,10000",
     "destWalk": "1,0,10000",
     "time": formattedTime,
+    "date": "2024-12-17"
   };
 
   store.onRetrieveTripSearchDoor2Doors(param)

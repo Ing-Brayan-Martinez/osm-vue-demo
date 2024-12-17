@@ -5,8 +5,15 @@ import {
   retrieveLocationByName,
   retrieveTripSearchDoor2Door
 } from "@/repository/planner.repository.js";
-import {getConfig, isEmptyConfig} from "@/repository/local.repository.js";
+import {
+  createConfigDefault,
+  getConfig,
+  isEmptyConfig,
+  updateConfig
+} from "@/repository/local.repository.js";
 import Optional from "optional-js";
+import {sleep} from "@/config/helpers.js";
+import {DEBUG} from "@/config/config.js";
 
 export const usePlannerStore = defineStore('planner', {
   state: () => ({
@@ -14,11 +21,83 @@ export const usePlannerStore = defineStore('planner', {
     // origen
     endLocalization: null, //Se usa para guardar el resultado de la búsqueda de la localización de
     // destino
+    isShowSplash: true,
   }),
   getters: {
     //
   },
   actions: {
+    /**
+     * Método para obtener la localización actual del usuario desde el API.
+     *
+     * @returns {Promise<Void>}
+     */
+    async onStart() {
+      return new Promise((resolve, reject) => {
+
+        // se usa para detener la ejecucion del hilo para que no se ejecute la proxima linea
+        // y que se pueda mostar la pantalla de splash correctamente
+        sleep(100)
+          .then(() => {
+
+            // se usa para verificar si la geolocalizacion esta disponible
+            if ("geolocation" in navigator) {
+
+              const success = (position) => {
+
+                if (DEBUG) {
+                  console.log(position);
+                  console.log('La latitud eje Y es: ', position.coords.latitude, 'y la longitud' +
+                    ' eje X es: ', position.coords.longitude);
+                }
+
+                //se debe guardar en el localstorage
+                const empty = isEmptyConfig();
+
+                if (empty) {
+                  const data = createConfigDefault();
+                  data.position = position;
+
+                  updateConfig(data);
+
+                } else {
+                  const data = getConfig();
+                  data.position = position;
+
+                  updateConfig(data);
+                }
+
+                sleep(1800)
+                  .then(() => {
+                    this.isShowSplash = false;
+                    resolve(null);
+                  });
+
+              };
+
+              const error = (err) => {
+                console.error(err);
+                reject(err);
+              }
+
+              // se usa para obtener la ubicacion del usuario
+              navigator.geolocation.getCurrentPosition(success, error);
+
+
+            } else {
+              // si no esta disponible se muestra un alert de error y se navega a la pagina de login
+              alert('Geolocation is not available...');
+              resolve(null);
+            }
+
+          })
+          .catch((err) => {
+            console.error(err);
+            reject();
+          });
+
+      });
+    },
     /**
      * Método para obtener la localización actual del usuario desde el localStorage.
      *
