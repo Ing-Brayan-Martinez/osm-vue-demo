@@ -1,5 +1,5 @@
 <script setup>
-import {defineProps, onMounted} from "vue";
+import {computed, defineProps, onMounted} from "vue";
 import {usePlannerStore} from "@/stores/planner.store.js";
 
 const store = usePlannerStore();
@@ -10,6 +10,22 @@ const props = defineProps({
     required: true
   },
 });
+
+const bus = props.item.legList.leg.find((leg) => leg.type === "JNY");
+
+const timeStart = computed(() => props.item.Origin.time);
+const timeEnd = computed(() => props.item.Destination.time);
+
+const busDescription = computed(() => {
+  if (bus !== null) {
+    return `Salida: ${bus.name}: ${bus.origin.time} ${bus.origin.name}`
+  } else {
+    return `No description`
+  }
+});
+
+const duration = computed(() => props.item.duration);
+const transferCount = computed(() => props.item.transferCount);
 
 onMounted(async () => {
   const param = {
@@ -33,9 +49,21 @@ onMounted(async () => {
 
 <template>
   <div id="route-card">
-    <h1>{{ props.item.duration }}</h1>
-    <p>Hora de inicio: {{ props.item.Origin.time }}</p>
-    <p>Hora de final: {{ props.item.Destination.time }}</p>
+    <v-col>
+      <v-row>
+        <p>{{ timeStart }}</p>
+        <p>Rutes</p>
+        <p>{{ timeEnd }}</p>
+      </v-row>
+      <v-row>
+        <p>{{ busDescription }}</p>
+      </v-row>
+      <v-row>
+        <p>{{ duration }}</p>
+        <p>{{ transferCount }}</p>
+      </v-row>
+    </v-col>
+
   </div>
 </template>
 
