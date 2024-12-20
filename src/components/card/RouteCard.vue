@@ -11,16 +11,20 @@ const props = defineProps({
   },
 });
 
-const bus = props.item.legList.leg.find((leg) => leg.type === "JNY");
+const bus = props.item?.legList?.leg?.find((leg) => leg.type === "JNY");
 
 const timeStart = computed(() => props.item.Origin.time);
 const timeEnd = computed(() => props.item.Destination.time);
 
 const busDescription = computed(() => {
-  if (bus !== null) {
-    return `Salida: ${bus.name}: ${bus.origin.time} ${bus.origin.name}`
-  } else {
+  if (bus === null || bus === undefined) {
     return `No description`
+  } else if (bus.legList === null || bus.legList === undefined) {
+    return `No description`
+  } else if (bus.legList.leg === null || bus.legList.leg === undefined) {
+    return `No description`
+  } else {
+    return `Salida: ${bus.name}: ${bus.origin.time} ${bus.origin.name}`
   }
 });
 

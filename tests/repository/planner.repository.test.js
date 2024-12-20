@@ -35,10 +35,19 @@ describe("RoutePlanner", () => {
       "originCoordLat": "4.687623",
       "destCoordLong": "-74.06546",
       "destCoordLat": "4.643881",
-      "withFreq": "0",
-      "originWalk": "1,0,10000",
-      "destWalk": "1,0,10000",
-      "time": "08:00",
+      "groupFilter": "GROUP_PT",
+      "attributes": "!barrierfree",
+      "products": "256",
+      "changeTimePercent": 100,
+      "addChangeTime": 3,
+      "rtMode": "OFF", // REALTIME
+      "totalCar": "1,0,2000,100",
+      "totalWalk": "1,0,2000,100",
+      "totalBike": "1,0,2000,100",
+      "passlist": 1,
+      "poly": "1",
+      "polyEnc": "N",
+      "searchForArrival": 0
     };
 
     const result =

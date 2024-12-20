@@ -54,22 +54,39 @@ const onSearch = () => {
     return;
   }
 
-  let now = new Date();
-  let hours = now.getHours();
-  let minutes = now.getMinutes();
+  const now = new Date();
 
-  let formattedTime = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
+  //time
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const formattedTime = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
+
+  //date
+  const year = now.getFullYear();
+  const month = (now.getMonth() + 1).toString().padStart(2, '0');
+  const day = now.getDate().toString().padStart(2, '0');
+  const formattedDate = year.toString() + "-" + month.toString() + "-" + day.toString();
 
   const param = {
     "originCoordLong": originCoordLong,
     "originCoordLat": originCoordLat,
     "destCoordLong": destCoordLong,
     "destCoordLat": destCoordLat,
-    "withFreq": "0",
-    "originWalk": "1,0,10000",
-    "destWalk": "1,0,10000",
+    "groupFilter": "GROUP_PT",
+    "attributes": "!barrierfree",
+    "products": "256",
+    "changeTimePercent": 100,
+    "addChangeTime": 3,
+    "rtMode": "OFF", // REALTIME
+    "totalCar": "1,0,2000,100",
+    "totalWalk": "1,0,2000,100",
+    "totalBike": "1,0,2000,100",
+    "passlist": 1,
+    "poly": "1",
+    "polyEnc": "N",
+    "searchForArrival": 0,
     "time": formattedTime,
-    "date": "2024-12-17"
+    "date": formattedDate
   };
 
   store.onRetrieveTripSearchDoor2Doors(param)
